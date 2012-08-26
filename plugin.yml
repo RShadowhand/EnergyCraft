@@ -1,6 +1,6 @@
 name: EnergyCraft
 main: com.github.vsams14.energycraft.Main
-version: 1.0.0
+version: 1.1.0
 authors: [vsams14]
 commands:
    emc:
