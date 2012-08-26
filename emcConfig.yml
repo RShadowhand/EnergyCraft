@@ -1,4 +1,6 @@
 # ID - Damage_Value :  EMC
+# ID-A means all damage values (ie, wool)
+# ID-X means item can be damaged and will use a percentage of total EMC
 
 '4-0': 1
 '44-3': 1
