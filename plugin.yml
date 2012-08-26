@@ -2,3 +2,7 @@ name: EnergyCraft
 main: com.github.vsams14.energycraft.Main
 version: 1.0.0
 authors: [vsams14]
+commands:
+   emc:
+      description: Checks the EMC value of the item in hand.
+      usage: /emc

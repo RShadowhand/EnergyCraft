@@ -7,10 +7,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 public class Config {
 	private Main main;
+	private FileConfiguration emcConfig = null;
+	private File emcConfigFile = null;
 
 	public Config(Main main) {
 		this.main = main;
@@ -18,24 +25,21 @@ public class Config {
 
 	public int getEMC(ItemStack i) {
 		if (i != null) {
-			main.reloadConfig();
 			String s = i.getTypeId() + "-" + i.getDurability();
-			String z = main.getConfig().getString(s);
+			String z = emcConfig.getString(s);
 			int dur;
-			
+
 			if (z == null) {
 				s = i.getTypeId() + "-A";
-				z = main.getConfig().getString(s);
+				z = emcConfig.getString(s);
 				if (z == null) {
 					s = i.getTypeId() + "-X";
-					z = main.getConfig().getString(s);
+					z = emcConfig.getString(s);
 					if (z == null) {
 						return 0;
 					}
-					main.log.info(s + " is a variable item");
 					dur = Integer.parseInt(z);
-					float ddur = 1.0F - Float.valueOf(i.getDurability()) / getMaxDur(i, dur);
-					main.log.info("Condensed " + s + " for " + (int)(dur * ddur) + " EMC");
+					float ddur = 1.0F - Float.valueOf(i.getDurability()) / getMaxDur(i);
 					return (int)(dur * ddur);
 				}
 
@@ -50,7 +54,48 @@ public class Config {
 		return 0;
 	}
 
-	public float getMaxDur(ItemStack i, int dd) {
+
+	public void loadEMCConfig() {
+		if (emcConfigFile == null) {
+			emcConfigFile = new File(main.getDataFolder(), "emcConfig.yml");
+		}
+		if (!emcConfigFile.exists()){
+			try {
+				emcConfigFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
+
+		emcConfig = YamlConfiguration.loadConfiguration(emcConfigFile);
+		try {
+			emcConfig.load(emcConfigFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+
+		InputStream defConfigStream = main.getResource("emcConfig.yml");
+		if (defConfigStream != null) {
+			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(main.getResource("emcConfig.yml"));
+			emcConfig.options().copyDefaults(true);
+			emcConfig.setDefaults(defConfig);
+		}
+
+		try {
+			emcConfig.save(emcConfigFile);
+			emcConfig.load(emcConfigFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public float getMaxDur(ItemStack i) {
 		switch (i.getTypeId()) {
 		case 276:
 			return 1562.0F;

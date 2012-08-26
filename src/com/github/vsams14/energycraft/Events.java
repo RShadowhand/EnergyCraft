@@ -41,7 +41,7 @@ public class Events implements Listener {
 	public void blockBreak(BlockBreakEvent event) {
 		Block b = event.getBlock();
 		Condenser s;
-		if ((s = main.util.removeCondenser(b)) != null) {
+		if ((s = main.util.getCondenser(b)) != null) {
 			main.getServer().broadcastMessage("Broke Condenser " + s.toString());
 			main.util.breakCondenser(s);
 			main.con.remove(s.toString());
@@ -56,27 +56,17 @@ public class Events implements Listener {
 			if ((b.getType() == Material.WALL_SIGN) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
 				Player p = event.getPlayer();
 				Condenser c;
-				if ((c = main.util.removeCondenser(b)) != null) {
+				if ((c = main.util.getCondenser(b)) != null) {
 					ItemStack i = p.getItemInHand();
 					if (main.conf.getEMC(i) > 0) {
 						ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
 						c.makesign();
-						String type = i.getType().toString().replaceAll("_", " ").replaceAll(" ON", "").replaceAll(" OFF", "");
-
-						if (i.getDurability() > 0) {
-							c.s.setLine(1, type + ":" + i.getDurability());
-						}else{
-							c.s.setLine(1, type);
-						}
-
-						c.s.setLine(2, c.EMC + " / " + main.conf.getEMC(i));
 						c.updateSign();
 						c.getChests();
-						c.out.getBlockInventory().addItem(new ItemStack[] { x });
-						p.getInventory().removeItem(new ItemStack[] { x });
+						c.out.getBlockInventory().addItem(x);
+						p.getInventory().removeItem(x);
 						p.updateInventory();
-						c.target = i.clone();
-						c.target.setAmount(1);
+						c.setTarget(i);
 						c.targetEMC = main.conf.getEMC(i);
 					}else if (i.getAmount() <= 0) {
 						if (c.pause) {

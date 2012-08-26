@@ -7,58 +7,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 	Map<String, Condenser> con = new HashMap<String, Condenser>();
-	Util util = new Util(this);
-	Config conf = new Config(this);
-	Logger log;
+	public Util util = new Util(this);
+	public Config conf = new Config(this);
+	public Logger log;
+	public static Main instance;
+	private int checkInterval = 1;
+	public int maxStackCondense = 4;
 
 	public void onEnable() {
 		new Events(this);
-		this.log = getLogger();
+		instance = this;
+		log = getLogger();
 		reloadConfig();
-		this.conf.loadCon();
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (String s : Main.this.con.keySet()) {
-					Condenser c = con.get(s);
-					c.condense(1);
-					c.updateSign();
-				}
-			}
-		}
-		, 0L, 20L);
+		conf.loadCon();
+		loadConfig();
+		conf.loadEMCConfig();
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new CondenseTask(), 0L, checkInterval * 5L);
+		getCommand("emc").setExecutor(new EMCCommand());
+	}
 
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (String s : Main.this.con.keySet()) {
-					Condenser c = con.get(s);
-					c.condense(1);
-					c.updateSign();
-				}
-			}
-		}
-		, 5L, 20L);
-
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (String s : Main.this.con.keySet()) {
-					Condenser c = con.get(s);
-					c.condense(1);
-					c.updateSign();
-				}
-			}
-		}
-		, 10L, 20L);
-
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				for (String s : Main.this.con.keySet()) {
-					Condenser c = con.get(s);
-					c.condense(1);
-					c.updateSign();
-				}
-			}
-		}
-		, 15L, 20L);
+	private void loadConfig(){
+		reloadConfig();
+		checkInterval = getConfig().getInt("check-interval");
+		maxStackCondense = getConfig().getInt("max-stack-condense");
 	}
 
 	public void onDisable()	{

@@ -18,7 +18,7 @@ public class Condenser {
 	public Chest in;
 	public Chest out;
 	public int EMC = 0; public int targetEMC = 0;
-	public ItemStack target = new ItemStack(Material.AIR, -1, (short)0);
+	public ItemStack target = new ItemStack(Material.AIR, -1, (short) 0);
 	public Map<String, Location> locs = new HashMap<String, Location>();
 	public Sign s;
 	public boolean pause = false;
@@ -50,7 +50,7 @@ public class Condenser {
 								j.setAmount(1);
 								if (main.conf.getEMC(h) > 0) {
 									getChests();
-									in.getBlockInventory().removeItem(new ItemStack[] { j });
+									in.getBlockInventory().removeItem(j);
 									EMC += main.conf.getEMC(h);
 									if (EMC < targetEMC) break;
 									EMC -= targetEMC;
@@ -67,28 +67,46 @@ public class Condenser {
 							EMC -= targetEMC;
 							getChests();
 							out.getBlockInventory().addItem(target);
-							if (count == 4) break;
+							if (count == main.maxStackCondense) break;
 						}
+						this.cleanInventory(out.getInventory());
+						this.cleanInventory(in.getInventory());
 					}
 				}
 				repeat--;
 			}
 	}
 
+	public void cleanInventory(Inventory i) {
+		for (ItemStack is : i) {
+			if (is == null) {
+				i.remove(is);
+				continue;
+			}
+			if (is.getAmount() <= 0)
+				i.remove(is);
+		}
+	}
+
 	public boolean hasEmptySpace(Inventory i) {
 		return i.firstEmpty() >= 0;
+	}
+
+	public void setTarget(ItemStack i){
+		i.setAmount(1);
+		target = i;
 	}
 
 	public void getChests()	{
 		Block b = blocks[3];
 		BlockState bs = b.getState();
 		if ((bs instanceof Chest)) {
-			in = (Chest)bs;
+			in = (Chest) bs;
 		}
 		b = blocks[5];
 		bs = b.getState();
 		if ((bs instanceof Chest))
-			out = (Chest)bs;
+			out = (Chest) bs;
 	}
 
 	public void makesign() {
@@ -96,9 +114,9 @@ public class Condenser {
 		blocks[6] = main.util.lFO(blocks[3], ort, 1);
 		blocks[6] = main.util.lFO(blocks[6], main.util.rotOrt(ort), 1);
 		blocks[6].setType(Material.WALL_SIGN);
-		blocks[6].setData((byte)main.util.ortToByte(ort));
+		blocks[6].setData((byte) main.util.ortToByte(ort));
 		BlockState bs = blocks[6].getState();
-		s = ((Sign)bs);
+		s = (Sign) bs;
 		blocks[4].setType(Material.ENCHANTMENT_TABLE);
 	}
 
@@ -114,7 +132,7 @@ public class Condenser {
 	}
 
 	public void updateSign() {
-		String type = target.getType().toString().replaceAll("_", " ").replaceAll(" ON", "").replaceAll(" OFF", "");
+		String type = main.util.getItemType(target);
 		if (target.getDurability() > 0)
 			s.setLine(1, type + ":" + target.getDurability());
 		else {
@@ -127,24 +145,28 @@ public class Condenser {
 			s.setLine(3, "");
 		}
 		s.update();
-		blocks[6].setData((byte)main.util.ortToByte(ort));
+		blocks[6].setData((byte) main.util.ortToByte(ort));
 	}
 
 	public String toString() {
 		Location base = (Location)locs.get("base");
-		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + base.getBlockY() + ":" + base.getBlockZ() + ":" + ort;
+		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + 
+				base.getBlockY() + ":" + base.getBlockZ() + ":" + ort;
 		return s;
 	}
 
 	public String saveString() {
 		Location base = (Location)locs.get("base");
-		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + base.getBlockY() + ":" + base.getBlockZ() + ":" + ort + ":" + EMC + ":" + target.getTypeId() + ":" + target.getDurability() + ":" + pause;
+		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + 
+				base.getBlockY() + ":" + base.getBlockZ() + ":" + ort + ":" + 
+				EMC + ":" + target.getTypeId() + ":" + target.getDurability() + ":" + pause;
 		return s;
 	}
 
 	public String bString() {
 		Location base = (Location)locs.get("base");
-		String s = "(" + base.getWorld().getName() + ": " + base.getBlockX() + ", " + base.getBlockY() + ", " + base.getBlockZ() + ")";
+		String s = "(" + base.getWorld().getName() + ": " + base.getBlockX() + 
+				", " + base.getBlockY() + ", " + base.getBlockZ() + ")";
 		return s;
 	}
 }

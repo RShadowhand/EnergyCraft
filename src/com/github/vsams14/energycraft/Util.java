@@ -66,7 +66,7 @@ public class Util {
 		}
 	}
 
-	public Condenser removeCondenser(Block b) {
+	public Condenser getCondenser(Block b) {
 		Location l = b.getLocation();
 		if (b.getType() == Material.IRON_BLOCK) {
 			for (String s : main.con.keySet()) {
@@ -256,5 +256,9 @@ public class Util {
 			}
 		}
 		return 0;
+	}
+
+	public String getItemType(ItemStack i){
+		return i.getType().toString().replaceAll("_", " ").replaceAll(" ON", "").replaceAll(" OFF", "");
 	}
 }
