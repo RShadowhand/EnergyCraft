@@ -19,9 +19,9 @@ public class Main extends JavaPlugin {
 		instance = this;
 		log = getLogger();
 		reloadConfig();
+		conf.loadEMCConfig();
 		conf.loadCon();
 		loadConfig();
-		conf.loadEMCConfig();
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new CondenseTask(), 0L, checkInterval * 5L);
 		getCommand("emc").setExecutor(new EMCCommand());
 	}
