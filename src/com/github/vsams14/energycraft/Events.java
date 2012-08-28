@@ -66,7 +66,7 @@ public class Events implements Listener {
 						c.out.getBlockInventory().addItem(x);
 						p.getInventory().removeItem(x);
 						p.updateInventory();
-						c.setTarget(i);
+						c.setTarget(i.clone());
 						c.targetEMC = main.conf.getEMC(i);
 					}else if (i.getAmount() <= 0) {
 						if (c.pause) {

@@ -55,8 +55,9 @@ public class Condenser {
 									if (EMC < targetEMC) break;
 									EMC -= targetEMC;
 									getChests();
-									out.getBlockInventory().addItem(target);
-
+									out.getBlockInventory().addItem(target.clone());
+									this.cleanInventory(out.getInventory());
+									this.cleanInventory(in.getInventory());
 									break;
 								}
 							}
@@ -66,7 +67,7 @@ public class Condenser {
 							count++;
 							EMC -= targetEMC;
 							getChests();
-							out.getBlockInventory().addItem(target);
+							out.getBlockInventory().addItem(target.clone());
 							if (count == main.maxStackCondense) break;
 						}
 						this.cleanInventory(out.getInventory());
