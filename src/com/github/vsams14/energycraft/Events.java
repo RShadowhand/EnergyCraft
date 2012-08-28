@@ -51,7 +51,7 @@ public class Events implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void enchant(PlayerInteractEvent event) {
-		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if (event.getAction()==Action.LEFT_CLICK_BLOCK) {
 			Block b = event.getClickedBlock();
 			if ((b.getType() == Material.WALL_SIGN) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
 				Player p = event.getPlayer();
@@ -61,13 +61,12 @@ public class Events implements Listener {
 					if (main.conf.getEMC(i) > 0) {
 						ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
 						c.makesign();
-						c.updateSign();
 						c.getChests();
 						c.out.getBlockInventory().addItem(x);
 						p.getInventory().removeItem(x);
 						p.updateInventory();
 						c.setTarget(i.clone());
-						c.targetEMC = main.conf.getEMC(i);
+						c.updateSign();
 					}else if (i.getAmount() <= 0) {
 						if (c.pause) {
 							c.pause = false;

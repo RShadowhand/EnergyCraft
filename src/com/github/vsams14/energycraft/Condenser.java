@@ -96,6 +96,7 @@ public class Condenser {
 	public void setTarget(ItemStack i){
 		i.setAmount(1);
 		target = i;
+		targetEMC = main.conf.getEMC(i);
 	}
 
 	public void getChests()	{
@@ -111,14 +112,12 @@ public class Condenser {
 	}
 
 	public void makesign() {
-		blocks[4].setType(Material.STONE);
 		blocks[6] = main.util.lFO(blocks[3], ort, 1);
 		blocks[6] = main.util.lFO(blocks[6], main.util.rotOrt(ort), 1);
 		blocks[6].setType(Material.WALL_SIGN);
 		blocks[6].setData((byte) main.util.ortToByte(ort));
 		BlockState bs = blocks[6].getState();
 		s = (Sign) bs;
-		blocks[4].setType(Material.ENCHANTMENT_TABLE);
 	}
 
 	public void getLocs() {
