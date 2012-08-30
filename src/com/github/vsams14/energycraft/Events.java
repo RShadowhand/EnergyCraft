@@ -1,5 +1,7 @@
 package com.github.vsams14.energycraft;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -51,7 +53,7 @@ public class Events implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void enchant(PlayerInteractEvent event) {
-		if (event.getAction()==Action.LEFT_CLICK_BLOCK) {
+		if (event.getAction()==Action.RIGHT_CLICK_BLOCK) {
 			Block b = event.getClickedBlock();
 			if ((b.getType() == Material.WALL_SIGN) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
 				Player p = event.getPlayer();
@@ -77,6 +79,37 @@ public class Events implements Listener {
 					}
 
 					event.setCancelled(true);
+				}
+			}
+		}else if(event.getAction() == Action.RIGHT_CLICK_AIR){
+			//line of sight blocks = losb
+			List<Block> losb = event.getPlayer().getLineOfSight(null, 10);
+			for(Block b : losb){
+				if(b.getType()==Material.WALL_SIGN){
+					Player p = event.getPlayer();
+					Condenser c;
+					if ((c = main.util.getCondenser(b)) != null) {
+						ItemStack i = p.getItemInHand();
+						if (main.conf.getEMC(i) > 0) {
+							ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
+							c.makesign();
+							c.getChests();
+							c.out.getBlockInventory().addItem(x);
+							p.getInventory().removeItem(x);
+							p.updateInventory();
+							c.setTarget(i.clone());
+							c.updateSign();
+						}else if (i.getAmount() <= 0) {
+							if (c.pause) {
+								c.pause = false;
+							}else{
+								c.pause = true;
+							}
+							c.updateSign();
+						}
+
+						event.setCancelled(true);
+					}
 				}
 			}
 		}

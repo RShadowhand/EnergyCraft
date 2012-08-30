@@ -19,15 +19,17 @@ public class Main extends JavaPlugin {
 		instance = this;
 		log = getLogger();
 		reloadConfig();
+		loadConfig();
 		conf.loadEMCConfig();
 		conf.loadCon();
-		loadConfig();
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new CondenseTask(), 0L, checkInterval * 5L);
 		getCommand("emc").setExecutor(new EMCCommand());
 	}
 
 	private void loadConfig(){
 		reloadConfig();
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 		checkInterval = getConfig().getInt("check-interval");
 		maxStackCondense = getConfig().getInt("max-stack-condense");
 	}
