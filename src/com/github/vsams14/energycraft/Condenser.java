@@ -3,8 +3,10 @@ package com.github.vsams14.energycraft;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -23,6 +25,8 @@ public class Condenser {
 	public Sign s;
 	public boolean pause = false;
 	private Main main;
+	public Chunk chunk;
+	public World w;
 
 	public Condenser(Block[] b, int ort, int emc, ItemStack t, boolean pause, Main main) {
 		blocks = b;
@@ -35,6 +39,8 @@ public class Condenser {
 		getChests();
 		makesign();
 		getLocs();
+		chunk = blocks[0].getChunk();
+		w = blocks[0].getWorld();
 	}
 
 	public void condense(int repeat) {
