@@ -39,7 +39,7 @@ public class Util {
 		int y = Integer.parseInt(p[2]);
 		int z = Integer.parseInt(p[3]);
 		int ort = Integer.parseInt(p[4]);
-		int EMC = Integer.parseInt(p[5]);
+		float EMC = Float.parseFloat(p[5]);
 		if (w != null) {
 			blocks[0] = w.getBlockAt(x, y, z);
 			blocks[3] = w.getBlockAt(x, y + 1, z);

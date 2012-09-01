@@ -19,7 +19,7 @@ public class Condenser {
 	public int ort = 0;
 	public Chest in;
 	public Chest out;
-	public int EMC = 0; public int targetEMC = 0;
+	public float EMC = 0; public float targetEMC = 0;
 	public ItemStack target = new ItemStack(Material.AIR, -1, (short) 0);
 	public Map<String, Location> locs = new HashMap<String, Location>();
 	public Sign s;
@@ -28,7 +28,7 @@ public class Condenser {
 	public Chunk chunk;
 	public World w;
 
-	public Condenser(Block[] b, int ort, int emc, ItemStack t, boolean pause, Main main) {
+	public Condenser(Block[] b, int ort, float emc, ItemStack t, boolean pause, Main main) {
 		blocks = b;
 		this.ort = ort;
 		EMC = emc;
@@ -138,7 +138,7 @@ public class Condenser {
 	}
 
 	public void updateSign() {
-		String type = main.util.getItemType(target);
+		String type = main.conf.getName(target);
 		if (target.getDurability() > 0)
 			s.setLine(1, type + ":" + target.getDurability());
 		else {

@@ -23,11 +23,11 @@ public class Config {
 		this.main = main;
 	}
 
-	public int getEMC(ItemStack i) {
+	public float getEMC(ItemStack i) {
 		if (i != null) {
 			String s = i.getTypeId() + "-" + i.getDurability();
 			String z = emcConfig.getString(s);
-			int dur;
+			float dur;
 
 			if (z == null) {
 				s = i.getTypeId() + "-A";
@@ -38,20 +38,73 @@ public class Config {
 					if (z == null) {
 						return 0;
 					}
-					dur = Integer.parseInt(z);
+					if(z.contains("//")){
+						String[] p = z.split("//");
+						dur = Float.parseFloat(p[0]);	
+					}else{
+						dur = Float.parseFloat(z);
+					}
 					float ddur = 1.0F - Float.valueOf(i.getDurability()) / getMaxDur(i);
 					return (int)(dur * ddur);
 				}
-
-				dur  = Integer.parseInt(z);
-				return dur;
+				if(z.contains("//")){
+					String[] p = z.split("//");
+					return Float.parseFloat(p[0]);	
+				}else{
+					return Float.parseFloat(z);
+				}
 			}
-
-			dur = Integer.parseInt(z);
-			return dur;
+			if(z.contains("//")){
+				String[] p = z.split("//");
+				return Float.parseFloat(p[0]);	
+			}else{
+				return Float.parseFloat(z);
+			}
 		}
 
 		return 0;
+	}
+	
+	public String getName(ItemStack i){
+		if (i != null) {
+			String s = i.getTypeId() + "-" + i.getDurability();
+			String z = emcConfig.getString(s);
+			String[] p;
+			if(z!=null){
+				if(z.contains("//")){
+					p = z.split("//");
+					return p[1];
+				}else{
+					return main.util.getItemType(i);
+				}
+			}else{
+				s = i.getTypeId() + "-A";
+				z = emcConfig.getString(s);
+				if(z!=null){
+					if(z.contains("//")){
+						p = z.split("//");
+						return p[1];
+					}else{
+						return main.util.getItemType(i);
+					}
+				}else{
+					s = i.getTypeId() + "-X";
+					z = emcConfig.getString(s);
+					if(z!=null){
+						if(z.contains("//")){
+							p = z.split("//");
+							return p[1];
+						}else{
+							return main.util.getItemType(i);
+						}
+					}else{
+						return main.util.getItemType(i);
+					}
+				}
+			}
+			
+		}
+		return null;
 	}
 
 

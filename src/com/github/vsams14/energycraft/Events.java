@@ -94,7 +94,7 @@ public class Events implements Listener {
 							ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
 							c.makesign();
 							c.getChests();
-							c.out.getBlockInventory().addItem(x);
+							//c.out.getBlockInventory().addItem(x);
 							p.getInventory().removeItem(x);
 							p.updateInventory();
 							c.setTarget(i.clone());
@@ -109,6 +109,7 @@ public class Events implements Listener {
 						}
 
 						event.setCancelled(true);
+						break;
 					}
 				}
 			}
