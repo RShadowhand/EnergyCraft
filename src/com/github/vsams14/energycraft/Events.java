@@ -44,9 +44,19 @@ public class Events implements Listener {
 		Block b = event.getBlock();
 		Condenser s;
 		if ((s = main.util.getCondenser(b)) != null) {
-			main.getServer().broadcastMessage("Broke Condenser " + s.toString());
-			main.util.breakCondenser(s);
-			main.con.remove(s.toString());
+			Block x = s.blocks[0];
+			if(b.getType()==Material.WALL_SIGN){
+				main.getServer().broadcastMessage("Reset Condenser " + s.toString());
+				main.con.remove(s.toString());
+				s = null;
+				main.util.getsetCondenser(x);
+				event.setCancelled(true);
+			}else{
+				main.getServer().broadcastMessage("Broke Condenser " + s.toString());
+				main.util.breakCondenser(s);
+				main.con.remove(s.toString());
+				s = null;
+			}
 		}
 	}
 
@@ -94,7 +104,7 @@ public class Events implements Listener {
 							ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
 							c.makesign();
 							c.getChests();
-							//c.out.getBlockInventory().addItem(x);
+							c.out.getBlockInventory().addItem(x);
 							p.getInventory().removeItem(x);
 							p.updateInventory();
 							c.setTarget(i.clone());
