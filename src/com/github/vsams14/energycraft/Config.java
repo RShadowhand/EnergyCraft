@@ -65,7 +65,7 @@ public class Config {
 		return 0;
 	}
 	
-	public String getName(ItemStack i){
+	public String getName(ItemStack i, boolean shorten){
 		if (i != null) {
 			String s = i.getTypeId() + "-" + i.getDurability();
 			String z = emcConfig.getString(s);
@@ -73,7 +73,11 @@ public class Config {
 			if(z!=null){
 				if(z.contains("//")){
 					p = z.split("//");
-					return p[1];
+					if(p[1].length()<16 || !shorten){
+						return p[1];	
+					}else{
+						return main.util.getItemType(i);
+					}
 				}else{
 					return main.util.getItemType(i);
 				}
@@ -83,7 +87,11 @@ public class Config {
 				if(z!=null){
 					if(z.contains("//")){
 						p = z.split("//");
-						return p[1];
+						if(p[1].length()<16 || !shorten){
+							return p[1];	
+						}else{
+							return main.util.getItemType(i);
+						}
 					}else{
 						return main.util.getItemType(i);
 					}
@@ -93,7 +101,11 @@ public class Config {
 					if(z!=null){
 						if(z.contains("//")){
 							p = z.split("//");
-							return p[1];
+							if(p[1].length()<16 || !shorten){
+								return p[1];	
+							}else{
+								return main.util.getItemType(i);
+							}
 						}else{
 							return main.util.getItemType(i);
 						}

@@ -13,24 +13,37 @@ public class Util {
 		this.main = main;
 	}
 
-	public boolean getsetCondenser(Block b)	{
+	public void setCondenser(Block b, String p)	{
+		Block x = getBase(b);
 		Block[] cb = new Block[7];
-		if ((cb = getConv(b)) != null) {
+		if ((cb = getConv(x)) != null) {
 			ItemStack t = new ItemStack(0, -1);
-			Condenser c = new Condenser(cb, getOrt(b), 0, t, false, main);
+			Condenser c = new Condenser(cb, getOrt(b), 0, t, false, main, p);
 			if (!main.con.containsKey(c.toString())) {
 				main.con.put(c.toString(), c);
 				main.getServer().broadcastMessage("Added Condenser " + c.bString());
-				return true;
+				return;
 			}
 			main.getServer().broadcastMessage("Invalid location for Condenser!");
-			return false;
 		}
-		return true;
+	}
+	
+	public boolean allowBuild(Block b){
+		Block x = getBase(b);
+		Block[] cb = getConv(x);
+		if (cb != null) {		
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	public void stringToCondenser(String s) {
 		String[] p = s.split(":");
+		if(p.length<10){
+			main.log.severe("The string '"+s+"' is missing one or more elements. COULD NOT LOAD!");
+			return;
+		}
 		World w = main.getServer().getWorld(p[0]);
 		Block[] blocks = new Block[7];
 
@@ -49,7 +62,7 @@ public class Util {
 			blocks[5] = lFO(blocks[3], ort, 2);
 			if (cBlocks(blocks)) {
 				ItemStack t = new ItemStack(Integer.parseInt(p[6]), 1, Short.parseShort(p[7]));
-				Condenser c = new Condenser(blocks, ort, EMC, t, pause, main);
+				Condenser c = new Condenser(blocks, ort, EMC, t, pause, main, p[9]);
 				main.log.info("Added Condenser " + c.bString());
 				if (!main.con.containsKey(s))
 					main.con.put(c.toString(), c);

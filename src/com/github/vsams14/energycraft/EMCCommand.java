@@ -15,7 +15,7 @@ public class EMCCommand implements CommandExecutor {
 				p.sendMessage("You are not holding anything.");
 				return true;
 			}
-			p.sendMessage("The EMC value of: " + Main.instance.conf.getName(p.getItemInHand()) + " is " + Main.instance.conf.getEMC(p.getItemInHand()));
+			p.sendMessage("The EMC value of: " + Main.instance.conf.getName(p.getItemInHand(), false) + " is " + Main.instance.conf.getEMC(p.getItemInHand()));
 			return true;
 		}
 		return true;

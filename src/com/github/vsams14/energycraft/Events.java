@@ -25,16 +25,17 @@ public class Events implements Listener {
 	public void blockPlace(BlockPlaceEvent event) {
 		Block b = event.getBlock();
 		if ((b.getType() == Material.IRON_BLOCK) || (b.getType() == Material.OBSIDIAN) || (b.getType() == Material.DIAMOND_BLOCK)) {
-			Block x;
-			if (((x = main.util.getBase(b)) != null) && (main.util.hasTop(b)) && (!main.util.getsetCondenser(x))) {
-				b.setTypeId(0);
+			if (main.util.allowBuild(b) && event.getPlayer().hasPermission("ec.build")){
+				main.util.setCondenser(b, event.getPlayer().getName());
+			}else{
+				event.setCancelled(true);
 			}
-
 		}else if ((b.getType() == Material.CHEST) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
 			Block x = b.getWorld().getBlockAt(b.getX(), b.getY() - 1, b.getZ());
-			Block z;
-			if (((z = main.util.getBase(x)) != null) && (!main.util.getsetCondenser(z))) {
-				b.setTypeId(0);
+			if (main.util.allowBuild(x) && event.getPlayer().hasPermission("ec.build")){
+				main.util.setCondenser(x, event.getPlayer().getName());
+			}else{
+				event.setCancelled(true);
 			}
 		}
 	}
@@ -43,19 +44,18 @@ public class Events implements Listener {
 	public void blockBreak(BlockBreakEvent event) {
 		Block b = event.getBlock();
 		Condenser s;
+		Player p = event.getPlayer();
 		if ((s = main.util.getCondenser(b)) != null) {
-			Block x = s.blocks[0];
-			if(b.getType()==Material.WALL_SIGN){
-				main.getServer().broadcastMessage("Reset Condenser " + s.toString());
-				main.con.remove(s.toString());
-				s = null;
-				main.util.getsetCondenser(x);
-				event.setCancelled(true);
-			}else{
-				main.getServer().broadcastMessage("Broke Condenser " + s.toString());
-				main.util.breakCondenser(s);
-				main.con.remove(s.toString());
-				s = null;
+			if((p.getName().equals(s.owner)&&p.hasPermission("ec.build"))||
+					(p.hasPermission("ec.edit")&&p.hasPermission("ec.build"))){
+				if(b.getType()==Material.WALL_SIGN){
+					event.setCancelled(true);
+				}else{
+					main.getServer().broadcastMessage("Broke Condenser " + s.toString());
+					main.util.breakCondenser(s);
+					main.con.remove(s.toString());
+					s = null;
+				}	
 			}
 		}
 	}
@@ -69,26 +69,30 @@ public class Events implements Listener {
 				Player p = event.getPlayer();
 				Condenser c;
 				if ((c = main.util.getCondenser(b)) != null) {
-					ItemStack i = p.getItemInHand();
-					if (main.conf.getEMC(i) > 0) {
-						ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
-						c.makesign();
-						c.getChests();
-						c.out.getBlockInventory().addItem(x);
-						p.getInventory().removeItem(x);
-						p.updateInventory();
-						c.setTarget(i.clone());
-						c.updateSign();
-					}else if (i.getAmount() <= 0) {
-						if (c.pause) {
-							c.pause = false;
-						}else{
-							c.pause = true;
+					if(p.getName().equals(c.owner)||p.hasPermission("ec.edit")){
+						ItemStack i = p.getItemInHand();
+						if(i.getEnchantments().isEmpty()){
+							if (main.conf.getEMC(i) > 0) {
+								ItemStack x = i.clone();
+								x.setAmount(1);
+								c.makesign();
+								c.getChests();
+								c.out.getBlockInventory().addItem(x);
+								p.getInventory().removeItem(x);
+								p.updateInventory();
+								c.setTarget(i.clone());
+								c.updateSign();
+							}else if (i.getAmount() <= 0) {
+								if (c.pause) {
+									c.pause = false;
+								}else{
+									c.pause = true;
+								}
+								c.updateSign();
+							}	
 						}
-						c.updateSign();
+						event.setCancelled(true);
 					}
-
-					event.setCancelled(true);
 				}
 			}
 		}else if(event.getAction() == Action.RIGHT_CLICK_AIR){
@@ -99,28 +103,41 @@ public class Events implements Listener {
 					Player p = event.getPlayer();
 					Condenser c;
 					if ((c = main.util.getCondenser(b)) != null) {
-						ItemStack i = p.getItemInHand();
-						if (main.conf.getEMC(i) > 0) {
-							ItemStack x = new ItemStack(i.getType(), 1, i.getDurability());
-							c.makesign();
-							c.getChests();
-							c.out.getBlockInventory().addItem(x);
-							p.getInventory().removeItem(x);
-							p.updateInventory();
-							c.setTarget(i.clone());
-							c.updateSign();
-						}else if (i.getAmount() <= 0) {
-							if (c.pause) {
-								c.pause = false;
-							}else{
-								c.pause = true;
+						if(p.getName().equals(c.owner)||p.hasPermission("ec.edit")){
+							ItemStack i = p.getItemInHand();
+							if(i.getEnchantments().isEmpty()){
+								if (main.conf.getEMC(i) > 0) {
+									ItemStack x = i.clone();
+									x.setAmount(1);
+									c.makesign();
+									c.getChests();
+									c.out.getBlockInventory().addItem(x);
+									p.getInventory().removeItem(x);
+									p.updateInventory();
+									c.setTarget(i.clone());
+									c.updateSign();
+								}else if (i.getAmount() <= 0) {
+									if (c.pause) {
+										c.pause = false;
+									}else{
+										c.pause = true;
+									}
+									c.updateSign();
+								}	
 							}
-							c.updateSign();
-						}
 
-						event.setCancelled(true);
-						break;
+							event.setCancelled(true);
+							break;	
+						}
 					}
+				}
+			}
+		}else if(event.getAction() == Action.LEFT_CLICK_BLOCK){
+			Block b = event.getClickedBlock();
+			if(b.getType() == Material.WALL_SIGN){
+				Condenser c;
+				if ((c = main.util.getCondenser(b)) != null) {
+					c.reset();
 				}
 			}
 		}

@@ -27,8 +27,9 @@ public class Condenser {
 	private Main main;
 	public Chunk chunk;
 	public World w;
+	public String owner = "";
 
-	public Condenser(Block[] b, int ort, float emc, ItemStack t, boolean pause, Main main) {
+	public Condenser(Block[] b, int ort, float emc, ItemStack t, boolean pause, Main main, String owner) {
 		blocks = b;
 		this.ort = ort;
 		EMC = emc;
@@ -41,47 +42,49 @@ public class Condenser {
 		getLocs();
 		chunk = blocks[0].getChunk();
 		w = blocks[0].getWorld();
+		this.owner = owner;
 	}
 
-	public void condense(int repeat) {
-		if (!pause)
-			while (repeat > 0) {
-				if (targetEMC > 0) {
-					getChests();
-					if (hasEmptySpace(out.getBlockInventory())) {
-						for (int x = 0; x < in.getBlockInventory().getSize(); x++) {
-							ItemStack h = in.getBlockInventory().getItem(x);
-							if (h != null) {
-								ItemStack j = h.clone();
-								j.setAmount(1);
-								if (main.conf.getEMC(h) > 0) {
-									getChests();
-									in.getBlockInventory().removeItem(j);
-									EMC += main.conf.getEMC(h);
-									if (EMC < targetEMC) break;
-									EMC -= targetEMC;
-									getChests();
-									out.getBlockInventory().addItem(target.clone());
-									this.cleanInventory(out.getInventory());
-									this.cleanInventory(in.getInventory());
-									break;
-								}
+	public void condense() {
+		if (!pause){
+			if (targetEMC > 0) {
+				getChests();
+				if (hasEmptySpace(out.getBlockInventory())) {
+					for (int x = 0; x < in.getBlockInventory().getSize(); x++) {
+						ItemStack h = in.getBlockInventory().getItem(x);
+						if (h != null) {
+							ItemStack j = h.clone();
+							j.setAmount(1);
+							if (main.conf.getEMC(h) > 0) {
+								getChests();
+								in.getBlockInventory().removeItem(j);
+								EMC += main.conf.getEMC(h);
+								//main.getServer().broadcastMessage(bString()+" condensed "+main.conf.getName(h, false)+" for "+main.conf.getEMC(h)+" EMC!");
+								if (EMC < targetEMC) break;
+								EMC -= targetEMC;
+								getChests();
+								out.getBlockInventory().addItem(target.clone());
+								//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
+								this.cleanInventory(out.getInventory());
+								this.cleanInventory(in.getInventory());
+								break;
 							}
 						}
-						int count = 0;
-						while (EMC >= targetEMC) {
-							count++;
-							EMC -= targetEMC;
-							getChests();
-							out.getBlockInventory().addItem(target.clone());
-							if (count == main.maxStackCondense) break;
-						}
-						this.cleanInventory(out.getInventory());
-						this.cleanInventory(in.getInventory());
 					}
+					int count = 0;
+					while (EMC >= targetEMC) {
+						count++;
+						EMC -= targetEMC;
+						getChests();
+						out.getBlockInventory().addItem(target.clone());
+						//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
+						if (count == main.maxStackCondense) break;
+					}
+					this.cleanInventory(out.getInventory());
+					this.cleanInventory(in.getInventory());
 				}
-				repeat--;
 			}
+		}
 	}
 
 	public void cleanInventory(Inventory i) {
@@ -103,6 +106,25 @@ public class Condenser {
 		i.setAmount(1);
 		target = i;
 		targetEMC = main.conf.getEMC(i);
+	}
+	
+	public void reset(){
+		EMC = 0;
+		target = new ItemStack(Material.AIR, -1, (short) 0);
+		targetEMC = 0;
+		pause = false;
+		getChests();
+		for(ItemStack i : in.getBlockInventory()){
+			if(i!=null){
+				in.getBlockInventory().removeItem(i);
+			}
+		}
+		getChests();
+		for(ItemStack i : out.getBlockInventory()){
+			if(i!=null){
+				out.getBlockInventory().removeItem(i);
+			}
+		}
 	}
 
 	public void getChests()	{
@@ -138,7 +160,7 @@ public class Condenser {
 	}
 
 	public void updateSign() {
-		String type = main.conf.getName(target);
+		String type = main.conf.getName(target, true);
 		if (target.getDurability() > 0)
 			s.setLine(1, type + ":" + target.getDurability());
 		else {
@@ -165,7 +187,8 @@ public class Condenser {
 		Location base = (Location)locs.get("base");
 		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + 
 				base.getBlockY() + ":" + base.getBlockZ() + ":" + ort + ":" + 
-				EMC + ":" + target.getTypeId() + ":" + target.getDurability() + ":" + pause;
+				EMC + ":" + target.getTypeId() + ":" + target.getDurability() + 
+				":" + pause + ":" + owner;
 		return s;
 	}
 
