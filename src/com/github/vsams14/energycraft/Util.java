@@ -15,10 +15,11 @@ public class Util {
 
 	public void setCondenser(Block b, String p)	{
 		Block x = getBase(b);
+		if(x == null)return;
 		Block[] cb = new Block[7];
 		if ((cb = getConv(x)) != null) {
 			ItemStack t = new ItemStack(0, -1);
-			Condenser c = new Condenser(cb, getOrt(b), 0, t, false, main, p);
+			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, p);
 			if (!main.con.containsKey(c.toString())) {
 				main.con.put(c.toString(), c);
 				main.getServer().broadcastMessage("Added Condenser " + c.bString());
@@ -30,12 +31,26 @@ public class Util {
 	
 	public boolean allowBuild(Block b){
 		Block x = getBase(b);
-		Block[] cb = getConv(x);
-		if (cb != null) {		
-			return false;
-		}else{
+		if(x == null){
 			return true;
 		}
+		Block[] cb = getConv(x);
+		if (cb != null) {
+			ItemStack t = new ItemStack(0, -1);
+			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, "");
+			if (!main.con.containsKey(c.toString())){
+				for(Block z : cb){
+					if(getCondenser(z)!=null){
+						main.getServer().broadcastMessage("Condensers should not intersect!");
+						return false;
+					}
+				}
+				return true;
+			}else{
+				main.getServer().broadcastMessage("A condenser with the same base block already exists!");
+				return false;
+			}
+		}else return true;
 	}
 
 	public void stringToCondenser(String s) {
@@ -136,38 +151,33 @@ public class Util {
 				Block b3 = lFO(b, x, 1);
 				if ((b2.getType() == Material.DIAMOND_BLOCK) && (b3.getType() == Material.OBSIDIAN)) return b;
 			}
-		}
-		else if (b.getType() == Material.OBSIDIAN) {
+		}else if (b.getType() == Material.OBSIDIAN) {
 			for (int x = 1; x < 5; x++) {
 				Block b2 = lFO(b, x, 1);
 				Block b3 = lFO(b, oppOrt(x), 1);
 				if ((b2.getType() == Material.DIAMOND_BLOCK) && (b3.getType() == Material.IRON_BLOCK)) return b3;
 			}
-		}
-		else if (b.getType() == Material.DIAMOND_BLOCK) {
+		}else if (b.getType() == Material.DIAMOND_BLOCK) {
 			for (int x = 1; x < 5; x++) {
 				Block b2 = lFO(b, x, 1);
 				Block b3 = lFO(b, x, 2);
 				if ((b2.getType() == Material.OBSIDIAN) && (b3.getType() == Material.IRON_BLOCK)) return b3;
 			}
+		}else if (b.getType() == Material.CHEST) {
+			Block u = b.getWorld().getBlockAt(b.getX(), b.getY()-1, b.getZ());
+			if(u.getType() == Material.IRON_BLOCK) return u;
+			else if(u.getType() == Material.OBSIDIAN || u.getType() == Material.DIAMOND_BLOCK){
+				Block b2 = getBase(u);
+				return b2;
+			}
+		}else if (b.getType() == Material.ENCHANTMENT_TABLE) {
+			Block u = b.getWorld().getBlockAt(b.getX(), b.getY()-1, b.getZ());
+			if(u.getType() == Material.OBSIDIAN){
+				Block b2 = getBase(u);
+				return b2;
+			}
 		}
 		return null;
-	}
-
-	public boolean hasTop(Block b) {
-		Block x = b.getWorld().getBlockAt(b.getX(), b.getY() + 1, b.getZ());
-		if (b.getType() == Material.IRON_BLOCK) {
-			if (x.getType() == Material.CHEST) return true;
-		}
-		else if (b.getType() == Material.OBSIDIAN) {
-			if (x.getType() == Material.ENCHANTMENT_TABLE) return true;
-		}
-		else if ((b.getType() == Material.DIAMOND_BLOCK) && 
-				(x.getType() == Material.CHEST)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public int oppOrt(int i) {
@@ -199,22 +209,22 @@ public class Util {
 	}
 
 	public Block lFO(Block b, int i, int length) {
-		Location loc = b.getLocation();
+		World w = b.getWorld();
+		int x, y, z;
+		x = b.getX();
+		y = b.getY();
+		z = b.getZ();
 		switch (i) {
 		case 1:
-			loc.setX(loc.getX() + length);
-			break;
+			return w.getBlockAt(x+length, y, z);
 		case 2:
-			loc.setZ(loc.getZ() + length);
-			break;
+			return w.getBlockAt(x, y, z+length);
 		case 3:
-			loc.setX(loc.getX() - length);
-			break;
+			return w.getBlockAt(x-length, y, z);
 		case 4:
-			loc.setZ(loc.getZ() - length);
+			return w.getBlockAt(x, y, z-length);
 		}
-
-		return loc.getBlock();
+		return null;
 	}
 
 	public boolean cBlocks(Block[] a) {

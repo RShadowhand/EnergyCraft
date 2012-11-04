@@ -135,9 +135,12 @@ public class Events implements Listener {
 		}else if(event.getAction() == Action.LEFT_CLICK_BLOCK){
 			Block b = event.getClickedBlock();
 			if(b.getType() == Material.WALL_SIGN){
+				Player p = event.getPlayer();
 				Condenser c;
 				if ((c = main.util.getCondenser(b)) != null) {
-					c.reset();
+					if(p.getName().equals(c.owner)||p.hasPermission("ec.edit")){
+						c.reset(event.getPlayer().getName());
+					}
 				}
 			}
 		}

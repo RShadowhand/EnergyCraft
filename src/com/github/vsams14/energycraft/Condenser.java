@@ -108,7 +108,7 @@ public class Condenser {
 		targetEMC = main.conf.getEMC(i);
 	}
 	
-	public void reset(){
+	public void reset(String p){
 		EMC = 0;
 		target = new ItemStack(Material.AIR, -1, (short) 0);
 		targetEMC = 0;
@@ -125,6 +125,7 @@ public class Condenser {
 				out.getBlockInventory().removeItem(i);
 			}
 		}
+		owner = p;
 	}
 
 	public void getChests()	{
@@ -161,6 +162,7 @@ public class Condenser {
 
 	public void updateSign() {
 		String type = main.conf.getName(target, true);
+		s.setLine(0, "["+owner+"]");
 		if (target.getDurability() > 0)
 			s.setLine(1, type + ":" + target.getDurability());
 		else {
