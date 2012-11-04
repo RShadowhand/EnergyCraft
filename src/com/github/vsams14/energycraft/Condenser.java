@@ -168,7 +168,13 @@ public class Condenser {
 		else {
 			s.setLine(1, type);
 		}
-		s.setLine(2, EMC + " / " + main.conf.getEMC(target));
+		String e, et;
+		e = EMC + "";
+		if(e.endsWith(".0"))e = e.substring(0, e.lastIndexOf("."));
+		et = main.conf.getEMC(target) + "";
+		if(et.endsWith(".0"))et = et.substring(0, et.lastIndexOf("."));
+		
+		s.setLine(2, e + " / " + et);
 		if (pause)
 			s.setLine(3, "PAUSED");
 		else {
