@@ -73,14 +73,14 @@ public class Config {
 			if(z!=null){
 				if(z.contains("//")){
 					p = z.split("//");
-					if(p[1].length()<16 || !shorten){
-						return p[1];	
-					}else{
-						return main.util.getItemType(i);
-					}
-				}else{
-					return main.util.getItemType(i);
-				}
+					if(p.length>=2){
+						if(p[1].length()<16 || !shorten){
+							return p[1];	
+						}else{
+							return main.util.getItemType(i);
+						}	
+					}else return main.util.getItemType(i);
+				}else return main.util.getItemType(i);
 			}else{
 				s = i.getTypeId() + "-A";
 				z = emcConfig.getString(s);
@@ -89,12 +89,8 @@ public class Config {
 						p = z.split("//");
 						if(p[1].length()<16 || !shorten){
 							return p[1];	
-						}else{
-							return main.util.getItemType(i);
-						}
-					}else{
-						return main.util.getItemType(i);
-					}
+						}else return main.util.getItemType(i);
+					}else return main.util.getItemType(i);
 				}else{
 					s = i.getTypeId() + "-X";
 					z = emcConfig.getString(s);
@@ -103,15 +99,9 @@ public class Config {
 							p = z.split("//");
 							if(p[1].length()<16 || !shorten){
 								return p[1];	
-							}else{
-								return main.util.getItemType(i);
-							}
-						}else{
-							return main.util.getItemType(i);
-						}
-					}else{
-						return main.util.getItemType(i);
-					}
+							}else return main.util.getItemType(i);
+						}else return main.util.getItemType(i);
+					}else return main.util.getItemType(i);
 				}
 			}
 			
@@ -148,6 +138,12 @@ public class Config {
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(main.getResource("emcConfig.yml"));
 			emcConfig.options().copyDefaults(true);
 			emcConfig.setDefaults(defConfig);
+		}
+		
+		String s = emcConfig.getString("Version");
+		if(!s.equals("1.2.5")){
+			emcConfigFile.delete();
+			loadEMCConfig();
 		}
 
 		try {

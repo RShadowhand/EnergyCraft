@@ -51,7 +51,7 @@ public class Events implements Listener {
 				if(b.getType()==Material.WALL_SIGN){
 					event.setCancelled(true);
 				}else{
-					main.getServer().broadcastMessage("Broke Condenser " + s.toString());
+					main.getServer().broadcastMessage("Broke Condenser " + s.bString());
 					main.util.breakCondenser(s);
 					main.con.remove(s.toString());
 					s = null;
