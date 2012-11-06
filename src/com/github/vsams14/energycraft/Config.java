@@ -141,7 +141,7 @@ public class Config {
 		}
 		
 		String s = emcConfig.getString("Version");
-		if(!s.equals("1.2.5")){
+		if(!s.equals(main.getDescription().getVersion())){
 			emcConfigFile.delete();
 			loadEMCConfig();
 		}

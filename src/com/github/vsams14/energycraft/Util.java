@@ -35,22 +35,33 @@ public class Util {
 			return true;
 		}
 		Block[] cb = getConv(x);
-		if (cb != null) {
+		if (cb == null)return true;
+		else return false;
+	}
+	
+	public boolean willCreateCondenser(Block b){
+		Block x = getBase(b);
+		Block[] cb = getConv(x);
+		if(cb != null){
 			ItemStack t = new ItemStack(0, -1);
 			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, "");
 			if (!main.con.containsKey(c.toString())){
 				for(Block z : cb){
 					if(getCondenser(z)!=null){
 						main.getServer().broadcastMessage("Condensers should not intersect!");
+						c.removesign();
 						return false;
 					}
 				}
+				c.removesign();
 				return true;
 			}else{
-				main.getServer().broadcastMessage("A condenser with the same base block already exists!");
+				main.getServer().broadcastMessage("Condensers should not intersect!");
+				c.removesign();
 				return false;
 			}
-		}else return true;
+		}
+		return false;
 	}
 
 	public void stringToCondenser(String s) {

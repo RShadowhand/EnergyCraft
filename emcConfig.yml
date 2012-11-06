@@ -5,7 +5,7 @@
 # // Sets a custon name for that item
 # Not reccomended for -A types. Still works, but may cause confusion...
 
-Version: 1.2.5
+Version: 1.2.6
 '102-0': 0.375 //Glass Pane
 '44-5': 0.5 //Stone Beick Slab
 '60-0': 1 //Tilled Earth

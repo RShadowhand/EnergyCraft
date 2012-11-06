@@ -24,18 +24,14 @@ public class Events implements Listener {
 	@EventHandler
 	public void blockPlace(BlockPlaceEvent event) {
 		Block b = event.getBlock();
-		if ((b.getType() == Material.IRON_BLOCK) || (b.getType() == Material.OBSIDIAN) || (b.getType() == Material.DIAMOND_BLOCK)) {
-			if (main.util.allowBuild(b) && event.getPlayer().hasPermission("ec.build")){
-				main.util.setCondenser(b, event.getPlayer().getName());
-			}else{
-				event.setCancelled(true);
-			}
-		}else if ((b.getType() == Material.CHEST) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
-			Block x = b.getWorld().getBlockAt(b.getX(), b.getY() - 1, b.getZ());
-			if (main.util.allowBuild(x) && event.getPlayer().hasPermission("ec.build")){
-				main.util.setCondenser(x, event.getPlayer().getName());
-			}else{
-				event.setCancelled(true);
+		if ((b.getType() == Material.IRON_BLOCK) || (b.getType() == Material.OBSIDIAN) || (b.getType() == Material.DIAMOND_BLOCK)
+				|| (b.getType() == Material.CHEST) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
+			if (!main.util.allowBuild(b)){
+				if(main.util.willCreateCondenser(b) && event.getPlayer().hasPermission("ec.build")){
+					main.util.setCondenser(b, event.getPlayer().getName());
+				}else{
+					event.setCancelled(true);
+				}
 			}
 		}
 	}

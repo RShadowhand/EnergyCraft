@@ -149,6 +149,10 @@ public class Condenser {
 		s = (Sign) bs;
 	}
 
+	public void removesign(){
+		blocks[6].setType(Material.AIR);
+	}
+	
 	public void getLocs() {
 		locs.clear();
 		locs.put("base", blocks[0].getLocation());
