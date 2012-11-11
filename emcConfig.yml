@@ -178,11 +178,11 @@ Version: 1.2.6
 '308-X': 1792 //Iron Leggings
 '309-X': 1024 //Iron Boots
 '310-X': 40960 //Diamond Helm
-'311-X': 65536 //Diamond Chestplate
+'311-X': 65536 //[D] Chestplate
 '312-X': 57344 //Diamond Pants
 '313-X': 32768 //Diamond Boots
 '314-X': 10240 //Golden Helm
-'315-X': 16384 //Golden Chestplate
+'315-X': 16384 //[G] Chestplate
 '316-X': 14336 //Golden Pants
 '317-X': 8192 //Golden Boots
 '318-0': 4 //Flint
@@ -214,7 +214,7 @@ Version: 1.2.6
 '343-0': 1288 //Furnace Cart
 '344-0': 32 //Egg
 '345-0': 1088 //Compass
-'346-0': 12 //Fishing Rod
+'346-X': 12 //Fishing Rod
 '347-0': 8256 //Clock
 '348-0': 384 //Glowstone Dust
 '349-0': 64 //Raw Fish
