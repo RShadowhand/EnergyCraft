@@ -4,6 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class Util {
@@ -99,9 +102,20 @@ public class Util {
 	}
 
 	public void breakCondenser(Condenser c) {
-		c.blocks[6].setTypeId(0);
+		c.removesign();
+		Byte z = c.blocks[3].getData();
 		for (int x = 0; x < 6; x++) {
 			c.blocks[x].setTypeId(0);
+		}
+		c.blocks[1].setType(Material.CHEST);
+		Block b = c.blocks[1];
+		b.setData(z);
+		BlockState bs = b.getState();
+		if(bs instanceof Chest){
+			Chest save = (Chest) bs;
+			Inventory i = save.getInventory();
+			i.addItem((new ItemStack(54, 1)), (new ItemStack(116, 1)), (new ItemStack(42, 1)),
+					(new ItemStack(49, 1)), (new ItemStack(57, 1)));
 		}
 	}
 

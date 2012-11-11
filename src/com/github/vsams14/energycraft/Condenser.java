@@ -48,40 +48,45 @@ public class Condenser {
 	public void condense() {
 		if (!pause){
 			if (targetEMC > 0) {
-				getChests();
-				if (hasEmptySpace(out.getBlockInventory())) {
-					for (int x = 0; x < in.getBlockInventory().getSize(); x++) {
-						ItemStack h = in.getBlockInventory().getItem(x);
-						if (h != null) {
-							ItemStack j = h.clone();
-							j.setAmount(1);
-							if (main.conf.getEMC(h) > 0) {
-								getChests();
-								in.getBlockInventory().removeItem(j);
-								EMC += main.conf.getEMC(h);
-								//main.getServer().broadcastMessage(bString()+" condensed "+main.conf.getName(h, false)+" for "+main.conf.getEMC(h)+" EMC!");
-								if (EMC < targetEMC) break;
-								EMC -= targetEMC;
-								getChests();
-								out.getBlockInventory().addItem(target.clone());
-								//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
-								this.cleanInventory(out.getInventory());
-								this.cleanInventory(in.getInventory());
-								break;
+				if(chunk.isLoaded()){
+					getChests();
+					if (hasEmptySpace(out.getBlockInventory())) {
+						for (int x = 0; x < in.getBlockInventory().getSize(); x++) {
+							ItemStack h = in.getBlockInventory().getItem(x);
+							if (h != null) {
+								ItemStack j = h.clone();
+								j.setAmount(1);
+								if (main.conf.getEMC(h) > 0) {
+									getChests();
+									in.getBlockInventory().removeItem(j);
+									EMC += main.conf.getEMC(h);
+									//main.getServer().broadcastMessage(bString()+" condensed "+main.conf.getName(h, false)+" for "+main.conf.getEMC(h)+" EMC!");
+									if (EMC < targetEMC) break;
+									EMC -= targetEMC;
+									getChests();
+									out.getBlockInventory().addItem(target.clone());
+									//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
+									this.cleanInventory(out.getInventory());
+									this.cleanInventory(in.getInventory());
+									break;
+								}
 							}
 						}
-					}
-					int count = 0;
-					while (EMC >= targetEMC) {
-						count++;
-						EMC -= targetEMC;
-						getChests();
-						out.getBlockInventory().addItem(target.clone());
-						//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
-						if (count == main.maxStackCondense) break;
-					}
-					this.cleanInventory(out.getInventory());
-					this.cleanInventory(in.getInventory());
+						int count = 0;
+						while (EMC >= targetEMC) {
+							count++;
+							EMC -= targetEMC;
+							getChests();
+							out.getBlockInventory().addItem(target.clone());
+							//main.getServer().broadcastMessage(bString()+" created "+main.conf.getName(target, false)+"!");
+							if (count == main.maxStackCondense) break;
+						}
+						this.cleanInventory(out.getInventory());
+						this.cleanInventory(in.getInventory());
+					}	
+				}else{
+					chunk.load();
+					condense();
 				}
 			}
 		}
