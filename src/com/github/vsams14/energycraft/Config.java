@@ -207,7 +207,7 @@ public class Config {
 		case 316: return 106.0F; //Golden Pants
 		case 317: return 92.0F; //Golden Boots
 		case 346: return 65.0F; //Fishing Rod
-		case 359: return 239; //Shears
+		case 359: return 239.0F; //Shears
 		}
 		return 1.0F;
 	}

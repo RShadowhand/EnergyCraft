@@ -45,6 +45,7 @@ Version: 1.2.6
 '43-3': 2 //Cobble Slab
 '43-4': 512 //Bricks Slab
 '43-5': 1 //Smooth Slab
+'43-6': 2 //Stone Slab
 '44-0': 1 //Stone Slab
 '44-1': 4 //Sandstone Slab
 '44-2': 8 //Wooden Slab
