@@ -13,6 +13,7 @@ public class Main extends JavaPlugin {
 	public static Main instance;
 	private int checkInterval = 1;
 	public int maxStackCondense = 4;
+	public boolean permuse = false;
 
 	public void onEnable() {
 		new Events(this);
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin {
 		saveConfig();
 		checkInterval = getConfig().getInt("check-interval");
 		maxStackCondense = getConfig().getInt("max-stack-condense");
+		permuse = getConfig().getBoolean("permission-to-use");
 	}
 
 	public void onDisable()	{

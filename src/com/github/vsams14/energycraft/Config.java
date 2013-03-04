@@ -45,7 +45,7 @@ public class Config {
 						dur = Float.parseFloat(z);
 					}
 					float ddur = 1.0F - Float.valueOf(i.getDurability()) / getMaxDur(i);
-					return (int)(dur * ddur);
+					return (dur * ddur);
 				}
 				if(z.contains("//")){
 					String[] p = z.split("//");

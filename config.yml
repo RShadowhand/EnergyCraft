@@ -1,2 +1,10 @@
+# Built by EnergyCraft v1.2.7-a
+# 
+# Permission to use means that the player must have the proper permission
+# to be able to use the condensor. If set to false, this means that any user
+# can access a condensor. If it is true, a user must have ec.use to be able
+# to access the condensor.
+
 check-interval: 1
 max-stack-condense: 4
+permission-to-use: false
