@@ -1,6 +1,6 @@
 name: EnergyCraft
 main: com.github.vsams14.energycraft.Main
-version: 1.3.0-A
+version: 1.3.0
 authors: [vsams14, Samkio]
 commands:
    emc:
@@ -23,11 +23,11 @@ permissions:
       default: op
       
    ec.build:
-      description: Allows building/breaking a converter.
+      description: Allows building/breaking a condenser.
       default: false
       
    ec.edit:
-      description: Allows editing of others' converters.
+      description: Allows editing of others' condensers.
       default: false
       
    ec.reset:
@@ -35,7 +35,7 @@ permissions:
       default: false
       
    ec.use.*:
-      description: Allows access of the converter chests.
+      description: Allows access of the condenser chests.
       default: false
       
    ec.reload:

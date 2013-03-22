@@ -114,7 +114,7 @@ public class Util {
 				if (!main.con.containsKey(s))
 					main.con.put(c.toString(), c);
 			} else {
-				main.log.severe("The converter (" + s + ") is missing or corrupt!");
+				main.log.severe("The condenser (" + s + ") is missing or corrupt!");
 			}
 		}
 	}
