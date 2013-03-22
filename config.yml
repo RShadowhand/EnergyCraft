@@ -1,10 +1,12 @@
-# Built by EnergyCraft v1.2.7-a
+# Built by EnergyCraft v1.3.0-A
 # 
-# Permission to use means that the player must have the proper permission
-# to be able to use the condensor. If set to false, this means that any user
-# can access a condensor. If it is true, a user must have ec.use to be able
-# to access the condensor.
+# For all help, see online documentation
 
 check-interval: 1
 max-stack-condense: 4
 permission-to-use: false
+broadcast-messages: true
+level1: GOLD_BLOCK-30%
+level2: EMERALD_BLOCK-18%
+level3: DIAMOND_BLOCK-5%
+level4: GLOWSTONE-0%

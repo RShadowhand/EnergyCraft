@@ -27,9 +27,11 @@ public class Condenser {
 	private Main main;
 	public Chunk chunk;
 	public World w;
-	public String owner = "";
+	public String owner;
+	public int efficiency;
+	public int tax;
 
-	public Condenser(Block[] b, int ort, float emc, ItemStack t, boolean pause, Main main, String owner) {
+	public Condenser(Block[] b, int ort, float emc, ItemStack t, boolean pause, Main main, String owner, int ef) {
 		blocks = b;
 		this.ort = ort;
 		EMC = emc;
@@ -43,6 +45,8 @@ public class Condenser {
 		chunk = blocks[0].getChunk();
 		w = blocks[0].getWorld();
 		this.owner = owner;
+		efficiency = ef;
+		tax = getTax();
 	}
 
 	public void condense() {
@@ -56,10 +60,10 @@ public class Condenser {
 							if (h != null) {
 								ItemStack j = h.clone();
 								j.setAmount(1);
-								if (main.conf.getEMC(h) > 0) {
+								if (main.conf.getTaxEMC(h, tax) > 0) {
 									getChests();
 									in.getBlockInventory().removeItem(j);
-									EMC += main.conf.getEMC(h);
+									EMC += main.conf.getTaxEMC(h, tax);
 									//main.getServer().broadcastMessage(bString()+" condensed "+main.conf.getName(h, false)+" for "+main.conf.getEMC(h)+" EMC!");
 									if (EMC < targetEMC) break;
 									EMC -= targetEMC;
@@ -84,12 +88,33 @@ public class Condenser {
 						this.cleanInventory(out.getInventory());
 						this.cleanInventory(in.getInventory());
 					}	
+					for(int x = 0; x < out.getBlockInventory().getSize(); x++){
+						if (hasEmptySpace(in.getBlockInventory())) {
+							ItemStack h = out.getBlockInventory().getItem(x);
+							if (h != null) {
+								if(h.getType()!=target.getType()){
+									ItemStack j = h.clone();
+									j.setAmount(1);
+									out.getBlockInventory().removeItem(j);
+									in.getBlockInventory().addItem(j);
+								}
+							}
+						}
+					}
 				}else{
 					chunk.load();
 					condense();
 				}
 			}
 		}
+	}
+	
+	public int getTax(){
+		if(efficiency==1)return main.l1;
+		if(efficiency==2)return main.l2;
+		if(efficiency==3)return main.l3;
+		if(efficiency==4)return main.l4;
+		return 0;
 	}
 
 	public void cleanInventory(Inventory i) {
@@ -101,6 +126,11 @@ public class Condenser {
 			if (is.getAmount() <= 0)
 				i.remove(is);
 		}
+	}
+	
+	public void reload(){
+		targetEMC = main.conf.getEMC(target);
+		updateSign();
 	}
 
 	public boolean hasEmptySpace(Inventory i) {
@@ -172,6 +202,7 @@ public class Condenser {
 	public void updateSign() {
 		String type = main.conf.getName(target, true);
 		s.setLine(0, "["+owner+"]");
+		
 		if (target.getDurability() > 0)
 			s.setLine(1, type + ":" + target.getDurability());
 		else {
@@ -196,7 +227,7 @@ public class Condenser {
 	public String toString() {
 		Location base = (Location)locs.get("base");
 		String s = base.getWorld().getName() + ":" + base.getBlockX() + ":" + 
-				base.getBlockY() + ":" + base.getBlockZ() + ":" + ort;
+				base.getBlockY() + ":" + base.getBlockZ() + ":" + ort + ":" + efficiency;
 		return s;
 	}
 
@@ -212,7 +243,7 @@ public class Condenser {
 	public String bString() {
 		Location base = (Location)locs.get("base");
 		String s = "(" + base.getWorld().getName() + ": " + base.getBlockX() + 
-				", " + base.getBlockY() + ", " + base.getBlockZ() + ")";
+				", " + base.getBlockY() + ", " + base.getBlockZ() + " | " + efficiency +")";
 		return s;
 	}
 }

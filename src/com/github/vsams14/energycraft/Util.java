@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,6 +16,15 @@ public class Util {
 	public Util(Main main) {
 		this.main = main;
 	}
+	
+	public void broadcast(String s){
+		if(!main.broadcast) return;
+		for(Player p : main.getServer().getOnlinePlayers()){
+			if(p.hasPermission("ec.broadcast")){
+				p.sendMessage(s);
+			}
+		}
+	}
 
 	public void setCondenser(Block b, String p)	{
 		Block x = getBase(b);
@@ -22,13 +32,13 @@ public class Util {
 		Block[] cb = new Block[7];
 		if ((cb = getConv(x)) != null) {
 			ItemStack t = new ItemStack(0, -1);
-			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, p);
+			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, p, getEfficiency(cb));
 			if (!main.con.containsKey(c.toString())) {
 				main.con.put(c.toString(), c);
-				main.getServer().broadcastMessage("Added Condenser " + c.bString());
+				broadcast("Added Condenser " + c.bString());
 				return;
 			}
-			main.getServer().broadcastMessage("Invalid location for Condenser!");
+			broadcast("Invalid attempt to build a condenser by "+p+"!");
 		}
 	}
 	
@@ -42,16 +52,24 @@ public class Util {
 		else return false;
 	}
 	
+	public int getEfficiency(Block[] cb){
+		if(cb[2].getType().equals(main.m1)) return 1;
+		if(cb[2].getType().equals(main.m2)) return 2;
+		if(cb[2].getType().equals(main.m3)) return 3;
+		if(cb[2].getType().equals(main.m4)) return 4;
+		return 0;
+	}
+	
 	public boolean willCreateCondenser(Block b){
 		Block x = getBase(b);
 		Block[] cb = getConv(x);
 		if(cb != null){
 			ItemStack t = new ItemStack(0, -1);
-			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, "");
+			Condenser c = new Condenser(cb, getOrt(x), 0, t, false, main, "Owner", getEfficiency(cb));
 			if (!main.con.containsKey(c.toString())){
 				for(Block z : cb){
 					if(getCondenser(z)!=null){
-						main.getServer().broadcastMessage("Condensers should not intersect!");
+						broadcast("Condensers should not intersect!");
 						c.removesign();
 						return false;
 					}
@@ -59,7 +77,7 @@ public class Util {
 				c.removesign();
 				return true;
 			}else{
-				main.getServer().broadcastMessage("Condensers should not intersect!");
+				broadcast("Condensers should not intersect!");
 				c.removesign();
 				return false;
 			}
@@ -91,7 +109,7 @@ public class Util {
 			blocks[5] = lFO(blocks[3], ort, 2);
 			if (cBlocks(blocks)) {
 				ItemStack t = new ItemStack(Integer.parseInt(p[6]), 1, Short.parseShort(p[7]));
-				Condenser c = new Condenser(blocks, ort, EMC, t, pause, main, p[9]);
+				Condenser c = new Condenser(blocks, ort, EMC, t, pause, main, p[9], getEfficiency(blocks));
 				main.log.info("Added Condenser " + c.bString());
 				if (!main.con.containsKey(s))
 					main.con.put(c.toString(), c);
@@ -100,9 +118,18 @@ public class Util {
 			}
 		}
 	}
+	
+	public Material getMaterialfromEff(int eff){
+		if (eff==1) return main.m1;
+		if (eff==2) return main.m2;
+		if (eff==3) return main.m3;
+		if (eff==4) return main.m4;
+		return null;
+	}
 
 	public void breakCondenser(Condenser c) {
 		c.removesign();
+		Material m = getMaterialfromEff(getEfficiency(c.blocks));
 		Byte z = c.blocks[3].getData();
 		for (int x = 0; x < 6; x++) {
 			c.blocks[x].setTypeId(0);
@@ -115,7 +142,7 @@ public class Util {
 			Chest save = (Chest) bs;
 			Inventory i = save.getInventory();
 			i.addItem((new ItemStack(54, 1)), (new ItemStack(116, 1)), (new ItemStack(42, 1)),
-					(new ItemStack(49, 1)), (new ItemStack(57, 1)));
+					(new ItemStack(49, 1)), (new ItemStack(m, 1)));
 		}
 	}
 
@@ -134,12 +161,29 @@ public class Util {
 				Location lo = (Location)c.locs.get("obs");
 				if (l.equals(lo)) return c;
 			}
-		}
-		else if (b.getType() == Material.DIAMOND_BLOCK) {
+		}else if (b.getType() == main.m4) {
 			for (String s : main.con.keySet()) {
 				Condenser c = main.con.get(s);
 				Location lo = (Location)c.locs.get("db");
-				if (l.equals(lo)) return c;
+				if (l.equals(lo) && c.efficiency==4) return c;
+			}
+		}else if (b.getType() == main.m3) {
+			for (String s : main.con.keySet()) {
+				Condenser c = main.con.get(s);
+				Location lo = (Location)c.locs.get("db");
+				if (l.equals(lo) && c.efficiency==3) return c;
+			}
+		}else if (b.getType() == main.m2) {
+			for (String s : main.con.keySet()) {
+				Condenser c = main.con.get(s);
+				Location lo = (Location)c.locs.get("db");
+				if (l.equals(lo) && c.efficiency==2) return c;
+			}
+		}else if (b.getType() == main.m1) {
+			for (String s : main.con.keySet()) {
+				Condenser c = main.con.get(s);
+				Location lo = (Location)c.locs.get("db");
+				if (l.equals(lo) && c.efficiency==1) return c;
 			}
 		}
 		else if (b.getType() == Material.CHEST) {
@@ -174,15 +218,15 @@ public class Util {
 			for (int x = 1; x < 5; x++) {
 				Block b2 = lFO(b, x, 2);
 				Block b3 = lFO(b, x, 1);
-				if ((b2.getType() == Material.DIAMOND_BLOCK) && (b3.getType() == Material.OBSIDIAN)) return b;
+				if ((main.varBase.contains(b2.getType())) && (b3.getType() == Material.OBSIDIAN)) return b;
 			}
 		}else if (b.getType() == Material.OBSIDIAN) {
 			for (int x = 1; x < 5; x++) {
 				Block b2 = lFO(b, x, 1);
 				Block b3 = lFO(b, oppOrt(x), 1);
-				if ((b2.getType() == Material.DIAMOND_BLOCK) && (b3.getType() == Material.IRON_BLOCK)) return b3;
+				if ((main.varBase.contains(b2.getType())) && (b3.getType() == Material.IRON_BLOCK)) return b3;
 			}
-		}else if (b.getType() == Material.DIAMOND_BLOCK) {
+		}else if (main.varBase.contains(b.getType())) {
 			for (int x = 1; x < 5; x++) {
 				Block b2 = lFO(b, x, 1);
 				Block b3 = lFO(b, x, 2);
@@ -191,7 +235,7 @@ public class Util {
 		}else if (b.getType() == Material.CHEST) {
 			Block u = b.getWorld().getBlockAt(b.getX(), b.getY()-1, b.getZ());
 			if(u.getType() == Material.IRON_BLOCK) return u;
-			else if(u.getType() == Material.OBSIDIAN || u.getType() == Material.DIAMOND_BLOCK){
+			else if(u.getType() == Material.OBSIDIAN || main.varBase.contains(u.getType())){
 				Block b2 = getBase(u);
 				return b2;
 			}
@@ -254,7 +298,7 @@ public class Util {
 
 	public boolean cBlocks(Block[] a) {
 		return (a[0].getType() == Material.IRON_BLOCK) && (a[1].getType() == Material.OBSIDIAN) && 
-				(a[2].getType() == Material.DIAMOND_BLOCK) && (a[3].getType() == Material.CHEST) && 
+				(main.varBase.contains(a[2].getType())) && (a[3].getType() == Material.CHEST) && 
 				(a[4].getType() == Material.ENCHANTMENT_TABLE) && (a[5].getType() == Material.CHEST);
 	}
 

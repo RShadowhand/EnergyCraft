@@ -24,8 +24,7 @@ public class Events implements Listener {
 	@EventHandler
 	public void blockPlace(BlockPlaceEvent event) {
 		Block b = event.getBlock();
-		if ((b.getType() == Material.IRON_BLOCK) || (b.getType() == Material.OBSIDIAN) || (b.getType() == Material.DIAMOND_BLOCK)
-				|| (b.getType() == Material.CHEST) || (b.getType() == Material.ENCHANTMENT_TABLE)) {
+		if (main.baseblocks.contains(b.getType())) {
 			if (!main.util.allowBuild(b)){
 				if(main.util.willCreateCondenser(b) && event.getPlayer().hasPermission("ec.build")){
 					main.util.setCondenser(b, event.getPlayer().getName());
@@ -47,7 +46,7 @@ public class Events implements Listener {
 				if(b.getType()==Material.WALL_SIGN){
 					event.setCancelled(true);
 				}else{
-					main.getServer().broadcastMessage("Broke Condenser " + s.bString());
+					main.util.broadcast("Broke Condenser " + s.bString());
 					main.util.breakCondenser(s);
 					main.con.remove(s.toString());
 					s = null;
@@ -73,8 +72,6 @@ public class Events implements Listener {
 								x.setAmount(1);
 								c.makesign();
 								c.getChests();
-								c.out.getBlockInventory().addItem(x);
-								p.getInventory().removeItem(x);
 								p.updateInventory();
 								c.setTarget(i.clone());
 								c.updateSign();
@@ -87,6 +84,16 @@ public class Events implements Listener {
 								c.updateSign();
 							}	
 						}
+						event.setCancelled(true);
+					}
+				}
+			}else if(b.getType()==Material.CHEST){
+				Player p = event.getPlayer();
+				Condenser c;
+				if ((c = main.util.getCondenser(b)) != null) {
+					if(p.getName().equals(c.owner)||p.hasPermission("ec.use.*")||
+							p.hasPermission("ec.use."+c.toString())||!main.permuse){
+					}else{
 						event.setCancelled(true);
 					}
 				}
@@ -107,8 +114,6 @@ public class Events implements Listener {
 									x.setAmount(1);
 									c.makesign();
 									c.getChests();
-									c.out.getBlockInventory().addItem(x);
-									p.getInventory().removeItem(x);
 									p.updateInventory();
 									c.setTarget(i.clone());
 									c.updateSign();
@@ -134,7 +139,7 @@ public class Events implements Listener {
 				Player p = event.getPlayer();
 				Condenser c;
 				if ((c = main.util.getCondenser(b)) != null) {
-					if(p.getName().equals(c.owner)||p.hasPermission("ec.edit")){
+					if(p.hasPermission("ec.reset")){
 						c.reset(event.getPlayer().getName());
 					}
 				}
