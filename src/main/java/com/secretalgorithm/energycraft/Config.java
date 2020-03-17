@@ -144,11 +144,10 @@ public class Config {
 			e.printStackTrace();
 		}
 
-		InputStream defConfigStream = main.getResource("emcConfig.yml");
+		Reader defConfigStream = new InputStreamReader(this.getResource("emcConfig.yml"), "UTF8");
 		if (defConfigStream != null) {
-			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(main.getResource("emcConfig.yml"));
-			//emcConfig.options().copyDefaults(true);
-			//emcConfig.setDefaults(defConfig);
+    			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+    			customConfig.setDefaults(defConfig);
 		}
 		
 		String s = emcConfig.getString("Version");
