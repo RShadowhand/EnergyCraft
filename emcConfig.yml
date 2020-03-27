@@ -1,286 +1,368 @@
-# ID - Damage_Value :  EMC
-# ID-A means all damage values (ie, wool)
-# ID-X means item can be damaged and will use a percentage of total EMC
+# ID - DAMAGE_VALUE :  EMC
+# ID-A MEANS ALL DAMAGE VALUES (IE, WOOL)
+# ID-X MEANS ITEM CAN BE DAMAGED AND WILL USE A PERCENTAGE OF TOTAL EMC
 #
-# // Sets a custon name for that item
+#
 
-Version: 1.4.0
-'0-0': 0 //Air
-'1-0': 1 //Stone
-'2-0': 1 //Grass
-'3-0': 1 //Dirt
-'4-0': 1 //Cobble
-'5-A': 8 //Wood Plank
-'6-A': 32 //Sapling
-'12-0': 1 //Sand
-'13-0': 4 //Gravel
-'14-0': 2048 //Gold Ore
-'15-0': 256 //Iron Ore
-'16-0': 128 //Coal Ore
-'17-A': 32 //Log
-'18-A': 1 //Leaves
-'20-0': 1 //Glass
-'21-0': 864 //Lapis Ore
-'22-0': 7776 //Lapis Block
-'23-0': 119 //Dispenser
-'24-A': 4 //Sandstone
-'25-0': 128 //Note Block
-'27-0': 2048 //Powered Rail
-'28-0': 256 //Detector Rail
-'29-A': 372 //Sticky Piston
-'30-0': 12 //Cobweb
-'31-A': 1 //Grass
-'32-0': 1 //Dead Bush
-'33-A': 348 //Piston
-'35-A': 48 //Wool
-'37-0': 16 //Dandelion
-'38-0': 16 //Rose
-'39-0': 32 //Brown Mushroom
-'40-0': 32 //Red Mushroom
-'41-0': 18432 //Gold Block
-'42-0': 2304 //Iron Block
-'43-0': 2 //Stone Slab
-'43-1': 8 //Sandstone Slab
-'43-2': 16 //Wooden Slab
-'43-3': 2 //Cobble Slab
-'43-4': 512 //Bricks Slab
-'43-5': 1 //Smooth Slab
-'43-6': 2 //Stone Slab
-'44-0': 1 //Stone Slab
-'44-1': 4 //Sandstone Slab
-'44-2': 8 //Wooden Slab
-'44-3': 1 //Cobble Slab
-'44-4': 256 //Brick Slab
-'44-5': 0.5 //Smooth Slab
-'45-0': 256 //Bricks
-'46-0': 964 //TNT
-'47-0': 336 //Bookshelf
-'48-0': 145 //Mossy Stone
-'49-0': 64 //Obsidian
-'50-0': 9 //Torch
-'53-0': 12 //Oak Stairs
-'54-0': 64 //Chest
-'56-0': 8192 //Diamond Ore
-'57-0': 73728 //Diamond Block
-'58-0': 32 //Crafting Table
-'60-0': 1 //Farmland
-'61-0': 8 //Furnace
-'62-0': 8 //Furnace
-'65-0': 14 //Ladder
-'66-0': 96 //Rail
-'67-0': 1 //Stone Stairs
-'69-0': 5 //Lever
-'70-0': 2 //Stone Pad
-'72-0': 16 //Wooden Pad
-'73-0': 64 //Redstone Ore
-'75-0': 68 //Redstone Torch
-'76-0': 68 //Redstone Torch
-'77-0': 1 //Stone Button
-'79-0': 1 //Ice
-'80-0': 4 //Snow Block
-'81-0': 8 //Cactus
-'82-0': 256 //Clay Block
-'84-0': 8256 //Jukebox
-'85-0': 12 //Wooden Fence
-'86-0': 144 //Pumpkin
-'87-0': 1 //Netherrack
-'88-0': 49 //Soul Sand
-'89-0': 1536 //Glowstone
-'91-0': 144 //Jack'o'Lantern
-'96-0': 24 //Trapdoor
-'97-0': 1 //Stone Egg
-'97-1': 1 //Cobble Egg
-'97-2': 1 //Smooth Egg
-'98-A': 1 //Stone Brick
-'101-0': 96 //Iron Bars
-'102-0': 0.375 //Glass Pane
-'103-0': 144 //Melon
-'106-0': 1 //Vines
-'107-0': 32 //Fence Gate
-'108-0': 348 //Brick Stairs
-'109-0': 1 //Smooth Stairs
-'110-0': 1 //Mycelium
-'111-0': 16 //Lily Pad
-'112-0': 4 //Nether Brick
-'113-0': 4 //Nether Fence
-'114-0': 6 //Nether Stairs
-'115-0': 24 //Nether Wart
-'116-0': 16736 //[Enchnt] Table
-'121-0': 1 //End Stone
-'122-0': 139264 //Dragon Egg
-'123-0': 1792 //Redstone Lamp
-'124-0': 1792 //Redstone Lamp
-'125-A': 8 //Wood Slab
-'126-A': 4 //Wood Slab
-'128-0': 6 //Sndstn Stairs
-'129-0': 0 //Emerald Ore
-'130-0': 2304 //Ender Chest
-'131-0': 268 //Tripwire Hook
-'133-0': 0 //Emerald Block
-'134-0': 12 //Spruce Stairs
-'135-0': 12 //Birch Stairs
-'136-0': 12 //Jungle Stairs
-'138-0': 0 //Beacon
-'139-0': 1 //Cobble Wall
-'139-1': 145 //Cobble Wall
-'143-0': 8 //Wooden Button
-'145-0': 7936 //Anvil
-'145-1': 0 //[-] Anvil
-'145-2': 0 //[--] Anvil
-'256-X': 264 //Iron Shovel
-'257-X': 776 //Iron Pick
-'258-X': 776 //Iron Axe
-'259-X': 260 //Flint and Steel
-'260-0': 128 //Apple
-'261-X': 48 //Bow
-'262-0': 14 //Arrow
-'263-0': 128 //Coal
-'263-1': 32 //Charcoal
-'264-0': 8192 //Diamond
-'265-0': 256 //Iron Ingot
-'266-0': 2048 //Gold Ingot
-'267-X': 516 //Iron Sword
-'268-X': 20 //Wooden Sword
-'269-X': 16 //Wooden Shovel
-'270-X': 32 //Wooden Pick
-'271-X': 32 //Wooden Axe
-'272-X': 6 //Stone Sword
-'273-X': 9 //Stone Shovel
-'274-X': 11 //Stone Pick
-'275-X': 11 //Stone Axe
-'276-X': 16388 //Diamond Sword
-'277-X': 8200 //Diamond Shovel
-'278-X': 24584 //Diamond Pick
-'279-X': 24584 //Diamond Axe
-'280-0': 4 //Stick
-'281-0': 6 //Bowl
-'282-0': 70 //Mushroom Stew
-'283-X': 4100 //Golden Sword
-'284-X': 2056 //Golden Shovel
-'285-X': 6152 //Golden Pick
-'286-X': 6152 //Golden Axe
-'287-0': 12 //String
-'288-0': 48 //Feather
-'289-0': 192 //Gunpowder
-'290-X': 24 //Wooden Hoe
-'291-X': 10 //Stone Hoe
-'292-X': 520 //Iron Hoe
-'293-X': 16392 //Diamond Hoe
-'294-X': 4104 //Golden Hoe
-'295-0': 16 //Seeds
-'296-0': 24 //Wheat
-'297-0': 72 //Bread
-'298-X': 320 //Leather Cap
-'299-X': 512 //Leather Tunic
-'300-X': 448 //Leather Pants
-'301-X': 256 //Leather Boots
-'306-X': 1280 //Iron Helm
-'307-X': 2048 //Iron Chestplate
-'308-X': 1792 //Iron Leggings
-'309-X': 1024 //Iron Boots
-'310-X': 40960 //Diamond Helm
-'311-X': 65536 //[D] Chestplate
-'312-X': 57344 //Diamond Pants
-'313-X': 32768 //Diamond Boots
-'314-X': 10240 //Golden Helm
-'315-X': 16384 //[G] Chestplate
-'316-X': 14336 //Golden Pants
-'317-X': 8192 //Golden Boots
-'318-0': 4 //Flint
-'319-0': 64 //Raw Pork
-'320-0': 64 //Cooked Pork
-'321-0': 80 //Painting
-'322-0': 1944 //Golden Apple
-'322-1': 147584 //Golden Apple[+]
-'323-0': 52 //Sign
-'324-0': 48 //Wooden Door
-'325-0': 768 //Bucket
-'326-0': 769 //Water Bucket
-'327-0': 832 //Lava Bucket
-'328-0': 1280 //Minecart
-'329-0': 192 //Saddle
-'330-0': 1536 //Iron Door
-'331-0': 64 //Redstone
-'332-0': 1 //Snowball
-'333-0': 40 //Boat
-'334-0': 64 //Leather
-'335-0': 833 //Milk
-'336-0': 64 //Brick
-'337-0': 64 //Clay
-'338-0': 32 //Sugar Cane
-'339-0': 32 //Paper
-'340-0': 96 //Book
-'341-0': 24 //Slimeball
-'342-0': 1344 //Storage Cart
-'343-0': 1288 //Furnace Cart
-'344-0': 32 //Egg
-'345-0': 1088 //Compass
-'346-X': 12 //Fishing Rod
-'347-0': 8256 //Clock
-'348-0': 384 //Glowstone Dust
-'349-0': 64 //Raw Fish
-'350-0': 64 //Cooked Fish
-'351-0': 8 //Ink Sac
-'351-1': 8 //Red Dye
-'351-2': 8 //Green Dye
-'351-3': 8 //Cocoa Beans
-'351-4': 864 //Lapis Lazuli
-'351-5': 8 //Purple Dye
-'351-6': 8 //Cyan Dye
-'351-7': 8 //Light Gray Dye
-'351-8': 8 //Gray Dye
-'351-9': 8 //Pink Dye
-'351-10': 8 //Lime Dye
-'351-11': 8 //Yellow Dye
-'351-12': 8 //Light Blue Dye
-'351-13': 8 //Magenta Dye
-'351-14': 8 //Orange Dye
-'351-15': 32 //Bone Meal
-'352-0': 96 //Bone
-'353-0': 32 //Sugar
-'354-0': 384 //Caek
-'355-0': 144 //Bed
-'356-0': 203 //Repeater
-'357-0': 22 //Cookie
-'358-0': 1344 //Map
-'359-X': 512 //Shears
-'360-0': 16 //Melon
-'361-0': 36 //Pumpkin Seeds
-'362-0': 16 //Melon Seeds
-'363-0': 64 //Raw Beef
-'364-0': 64 //Steak
-'365-0': 64 //Raw Chicken
-'366-0': 64 //Cooked Chicken
-'367-0': 24 //Rotten Flesh
-'368-0': 1024 //Ender Pearl
-'369-0': 1536 //Blaze Rod
-'370-0': 4096 //Ghast Tear
-'371-0': 227 //Gold Nugget
-'372-0': 24 //Nether Wart
-'374-0': 1 //Glass Bottle
-'375-0': 128 //Spider Eye
-'376-0': 192 //[F] Spider Eye
-'377-0': 768 //Blaze Powder
-'378-0': 792 //Magma Cream
-'379-0': 1539 //Brewing Stand
-'380-0': 1792 //Cauldron
-'381-0': 1792 //Ender Eye
-'382-0': 243 //[G] Melon
-'385-0': 362 //Fire Charge
-'386-0': 152 //Book + Quill
-'387-0': 152 //Written Book
-'389-0': 96 //Item Frame
-'390-0': 192 //Flower Pot
-'395-0': 1344 //Empty Map
-'400-0': 208 //Pumpkin Pie
-'2256-0': 2048 //[C418] 13
-'2257-0': 2048 //[C418] cat
-'2258-0': 2048 //[C418] blocks
-'2259-0': 2048 //[C418] chirp
-'2260-0': 2048 //[C418] far
-'2261-0': 2048 //[C418] mall
-'2262-0': 2048 //[C418] mellohi
-'2263-0': 2048 //[C418] stal
-'2264-0': 2048 //[C418] strad
-'2265-0': 2048 //[C418] ward
-'2266-0': 2048 //[C418] 11
+VERSION: 1.5.0
+'AIR-0': 0
+'STONE-0': 1
+'GRASS_BLOCK-0': 1
+'DIRT-0': 1
+'COBBLESTONE-0': 1
+'ACACIA_PLANKS-0': 8
+'BIRCH_PLANKS-0': 8
+'DARK_OAK_PLANKS-0': 8
+'JUNGLE_PLANKS-0': 8
+'OAK_PLANKS-0': 8
+'SPRUCE_PLANKS-0': 8
+'ACACIA_BOAT-0': 32
+'ACACIA_SAPLING-0': 32
+'BAMBOO_SAPLING-0': 32
+'BIRCH_SAPLING-0': 32
+'DARK_OAK_SAPLING-0': 32
+'JUNGLE_SAPLING-0': 32
+'SAND-0': 1
+'GRAVEL-0': 4
+'GOLD_ORE-0': 2048
+'IRON_ORE-0': 256
+'COAL_ORE-0': 128
+'ACACIA_LOG-0': 32
+'BIRCH_LOG-0': 32
+'DARK_OAK_LOG-0': 32
+'JUNGLE_LOG-0': 32
+'OAK_LOG-0': 32
+'SPRUCE_LOG-0': 32
+'STRIPPED_ACACIA_LOG-0': 32
+'STRIPPED_BIRCH_LOG-0': 32
+'STRIPPED_DARK_OAK_LOG-0': 32
+'STRIPPED_JUNGLE_LOG-0': 32
+'STRIPPED_OAK_LOG-0': 32
+'STRIPPED_SPRUCE_LOG-0': 32
+'ACACIA_LEAVES-0': 1
+'BIRCH_LEAVES-0': 1
+'DARK_OAK_LEAVES-0': 1
+'JUNGLE_LEAVES-0': 1
+'OAK_LEAVES-0': 1
+'SPRUCE_LEAVES-0': 1
+'BLACK_STAINED_GLASS-0': 1
+'BLUE_STAINED_GLASS-0': 1
+'BROWN_STAINED_GLASS-0': 1
+'CYAN_STAINED_GLASS-0': 1
+'GLASS-0': 1
+'GRAY_STAINED_GLASS-0': 1
+'GREEN_STAINED_GLASS-0': 1
+'LIGHT_BLUE_STAINED_GLASS-0': 1
+'LIGHT_GRAY_STAINED_GLASS-0': 1
+'LIME_STAINED_GLASS-0': 1
+'MAGENTA_STAINED_GLASS-0': 1
+'ORANGE_STAINED_GLASS-0': 1
+'PINK_STAINED_GLASS-0': 1
+'PURPLE_STAINED_GLASS-0': 1
+'RED_STAINED_GLASS-0': 1
+'WHITE_STAINED_GLASS-0': 1
+'YELLOW_STAINED_GLASS-0': 1
+'LAPIS_ORE-0': 864
+'LAPIS_BLOCK-0': 7776
+'DISPENSER-0': 119
+'CHISELED_RED_SANDSTONE-0': 4
+'CHISELED_SANDSTONE-0': 4
+'CUT_RED_SANDSTONE-0': 4
+'RED_SANDSTONE-0': 4
+'SANDSTONE-0': 4
+'SMOOTH_RED_SANDSTONE-0': 4
+'SMOOTH_SANDSTONE-0': 4
+'NOTE_BLOCK-0': 128
+'POWERED_RAIL-0': 2048
+'DETECTOR_RAIL-0': 256
+'STICKY_PISTON-0': 372
+'COBWEB-0': 12
+'GRASS-0': 1
+'DEAD_BUSH-0': 1
+'PISTON-0': 348
+'BLACK_WOOL-0': 48
+'BLUE_WOOL-0': 48
+'BROWN_WOOL-0': 48
+'CYAN_WOOL-0': 48
+'GRAY_WOOL-0': 48
+'GREEN_WOOL-0': 48
+'LIGHT_BLUE_WOOL-0': 48
+'LIGHT_GRAY_WOOL-0': 48
+'LIME_WOOL-0': 48
+'MAGENTA_WOOL-0': 48
+'ORANGE_WOOL-0': 48
+'PINK_WOOL-0': 48
+'PURPLE_WOOL-0': 48
+'RED_WOOL-0': 48
+'WHITE_WOOL-0': 48
+'YELLOW_WOOL-0': 48
+'DANDELION-0': 16
+'ROSE-0': 16
+'BROWN_MUSHROOM-0': 32
+'RED_MUSHROOM-0': 32
+'GOLD_BLOCK-0': 18432
+'IRON_BLOCK-0': 2304
+'STONE_SLAB-0': 1
+'CUT_RED_SANDSTONE_SLAB-0': 4
+'CUT_SANDSTONE_SLAB-0': 4
+'RED_SANDSTONE_SLAB-0': 4
+'SANDSTONE_SLAB-0': 4
+'SMOOTH_RED_SANDSTONE_SLAB-0': 4
+'SMOOTH_SANDSTONE_SLAB-0': 4
+'ACACIA_SLAB-0': 8
+'ANDESITE_SLAB-0': 8
+'BIRCH_SLAB-0': 8
+'DARK_OAK_SLAB-0': 8
+'JUNGLE_SLAB-0': 8
+'OAK_SLAB-0': 8
+'PETRIFIED_OAK_SLAB-0': 8
+'SPRUCE_SLAB-0': 8
+'COBBLESTONE_SLAB-3': 1
+'BRICK_SLAB-4': 256
+'SMOOTH_STONE_SLAB-5': 0.5
+'BRICKS-0': 256
+'BOOKSHELF-0': 336
+'MOSSY_COBBLESTONE-0': 145
+'OBSIDIAN-0': 64
+'TORCH-0': 9
+'CHEST-0': 64
+'DIAMOND_ORE-0': 8192
+'DIAMOND-0': 8192
+'DIAMOND_BLOCK-0': 73728
+'CRAFTING_TABLE-0': 32
+'FURNACE-0': 8
+'LADDER-0': 14
+'RAIL-0': 96
+'LEVER-0': 5
+'REDSTONE_ORE-0': 64
+'REDSTONE_TORCH-0': 68
+'ACACIA_BUTTON-0': 1
+'BIRCH_BUTTON-0': 1
+'DARK_OAK_BUTTON-0': 1
+'JUNGLE_BUTTON-0': 1
+'OAK_BUTTON-0': 1
+'SPRUCE_BUTTON-0': 1
+'STONE_BUTTON-0': 1
+'BLUE_ICE-0': 1
+'FROSTED_ICE-0': 1
+'ICE-0': 1
+'SNOW_BLOCK-0': 4
+'CACTUS-0': 8
+'CLAY-0': 256
+'JUKEBOX-0': 8256
+'ACACIA_FENCE-0': 12
+'BIRCH_FENCE-0': 12
+'DARK_OAK_FENCE-0': 12
+'JUNGLE_FENCE-0': 12
+'OAK_FENCE-0': 12
+'SPRUCE_FENCE-0': 12
+'PUMPKIN-0': 144
+'NETHERRACK-0': 1
+'SOUL_SAND-0': 49
+'GLOWSTONE-0': 1536
+'JACK_O_LANTERN-0': 144
+'ACACIA_TRAPDOOR-0': 24
+'BIRCH_TRAPDOOR-0': 24
+'DARK_OAK_TRAPDOOR-0': 24
+'JUNGLE_TRAPDOOR-0': 24
+'OAK_TRAPDOOR-0': 24
+'SPRUCE_TRAPDOOR-0': 24
+'STONE_BRICKS-0': 1
+'IRON_BARS-0': 96
+'BLACK_STAINED_GLASS_PANE-0': 0.375
+'BLUE_STAINED_GLASS_PANE-0': 0.375
+'BROWN_STAINED_GLASS_PANE-0': 0.375
+'CYAN_STAINED_GLASS_PANE-0': 0.375
+'GLASS_PANE-0': 0.375
+'GRAY_STAINED_GLASS_PANE-0': 0.375
+'GREEN_STAINED_GLASS_PANE-0': 0.375
+'LIGHT_BLUE_STAINED_GLASS_PANE-0': 0.375
+'LIGHT_GRAY_STAINED_GLASS_PANE-0': 0.375
+'LIME_STAINED_GLASS_PANE-0': 0.375
+'MAGENTA_STAINED_GLASS_PANE-0': 0.375
+'ORANGE_STAINED_GLASS_PANE-0': 0.375
+'PINK_STAINED_GLASS_PANE-0': 0.375
+'PURPLE_STAINED_GLASS_PANE-0': 0.375
+'RED_STAINED_GLASS_PANE-0': 0.375
+'WHITE_STAINED_GLASS_PANE-0': 0.375
+'YELLOW_STAINED_GLASS_PANE-0': 0.375
+'MELON-0': 144
+'VINE-0': 1
+'ACACIA_FENCE_GATE-0': 32
+'BIRCH_FENCE_GATE-0': 32
+'DARK_OAK_FENCE_GATE-0': 32
+'JUNGLE_FENCE_GATE-0': 32
+'OAK_FENCE_GATE-0': 32
+'SPRUCE_FENCE_GATE-0': 32
+'MYCELIUM-0': 1
+'LILY_PAD-0': 16
+'NETHER_BRICK-0': 4
+'NETHER_BRICK_FENCE-0': 24
+'ENCHANTING_TABLE-0': 16736
+'END_STONE-0': 1
+'DRAGON_EGG-0': 139264
+'REDSTONE_LAMP-0': 1792
+'EMERALD_ORE-0': 0
+'ENDER_CHEST-0': 2304
+'TRIPWIRE_HOOK-0': 268
+'EMERALD_BLOCK-0': 0
+'BEACON-0': 0
+'COBBLESTONE_WALL-0': 1
+'MOSSY_COBBLESTONE_WALL-0': 145
+'ACACIA_BUTTON-0': 8
+'BIRCH_BUTTON-0': 8
+'DARK_OAK_BUTTON-0': 8
+'JUNGLE_BUTTON-0': 8
+'OAK_BUTTON-0': 8
+'SPRUCE_BUTTON-0': 8
+'ANVIL-0': 7936
+'CHIPPED_ANVIL-0': 0
+'DAMAGED_ANVIL-0': 0
+'IRON_SHOVEL-X': 264
+'IRON_PICKAXE-X': 776
+'IRON_AXE-X': 776
+'FLINT_AND_STEEL-X': 260
+'APPLE-0': 128
+'BOW-X': 48
+'ARROW-0': 14
+'COAL-0': 128
+'CHARCOAL-0': 32
+'IRON_INGOT-0': 256
+'GOLD_INGOT-0': 2048
+'IRON_SWORD-X': 516
+'WOODEN_SWORD-X': 20
+'WOODEN_SHOVEL-X': 16
+'WOODEN_PICKAXE-X': 32
+'WOODEN_AXE-X': 32
+'STONE_SWORD-X': 6
+'STONE_SHOVEL-X': 9
+'STONE_PICKAXE-X': 11
+'STONE_AXE-X': 11
+'DIAMOND_SWORD-X': 16388
+'DIAMOND_SHOVEL-X': 8200
+'DIAMOND_PICKAXE-X': 24584
+'DIAMOND_AXE-X': 24584
+'GOLDEN_SWORD-X': 4100
+'GOLDEN_SHOVEL-X': 2056
+'GOLDEN_PICKAXE-X': 6152
+'GOLDEN_AXE-X': 6152
+'WOODEN_HOE-X': 24
+'STONE_HOE-X': 10
+'IRON_HOE-X': 520
+'DIAMOND_HOE-X': 16392
+'GOLDEN_HOE-X': 4104
+'LEATHER_HELMET-X': 320
+'LEATHER_CHESTPLATE-X': 512
+'LEATHER_LEGGINGS-X': 448
+'LEATHER_BOOTS-X': 256
+'IRON_HELMET-X': 1280
+'IRON_CHESTPLATE-X': 2048
+'IRON_LEGGINGS-X': 1792
+'IRON_BOOTS-X': 1024
+'DIAMOND_HELMET-X': 40960
+'DIAMOND_CHESTPLATE-X': 65536
+'DIAMOND_LEGGINGS-X': 57344
+'DIAMOND_BOOTS-X': 32768
+'GOLDEN_HELMET-X': 10240
+'GOLDEN_CHESTPLATE-X': 16384
+'GOLDEN_LEGGINGS-X': 14336
+'GOLDEN_BOOTS-X': 8192
+'GOLDEN_APPLE-0': 1944
+'ENCHANTED_GOLDEN_APPLE-0': 147584
+'STICK-0': 4
+'STRING-0': 12
+'FEATHER-0': 48
+'GUNPOWDER-0': 192
+'WHEAT_SEEDS-0': 16
+'WHEAT-0': 24
+'BREAD-0': 72
+'FLINT-0': 4
+'COOKED_PORKCHOP-0': 64
+'BUCKET-0': 768
+'WATER_BUCKET-0': 769
+'LAVA_BUCKET-0': 832
+'MINECART-0': 1280
+'SADDLE-0': 192
+'REDSTONE-0': 64
+'LEATHER-0': 64
+'MILK-0': 833
+'BRICK-0': 64
+'CLAY_BALL-0': 64
+'REEDS-0': 32
+'PAPER-0': 32
+'BOOK-0': 96
+'SLIME_BALL-0': 24
+'EGG-0': 32
+'FISHING_ROD-X': 12
+'COD-0': 64
+'PUFFERFISH-0': 64
+'TROPICAL_FISH-0': 64
+'SALMON-0': 64
+'COOKED_SALMON-0': 64
+'COOKED_COD-0': 64
+'BLACK_DYE-0': 8
+'BLUE_DYE-0': 8
+'BROWN_DYE-0': 8
+'CYAN_DYE-0': 8
+'GRAY_DYE-0': 8
+'GREEN_DYE-0': 8
+'LIGHT_BLUE_DYE-0': 8
+'LIGHT_GRAY_DYE-0': 8
+'LIME_DYE-0': 8
+'MAGENTA_DYE-0': 8
+'ORANGE_DYE-0': 8
+'PINK_DYE-0': 8
+'PURPLE_DYE-0': 8
+'RED_DYE-0': 8
+'WHITE_DYE-0': 8
+'YELLOW_DYE-0': 32
+'INK_SAC-0': 8
+'BONE-0': 96
+'SUGAR-0': 32
+'CAKE-0': 384
+'BED-0': 144
+'REPEATER-0': 203
+'COOKIE-0': 22
+'FILLED_MAP-0': 1344
+'SHEARS-X': 512
+'MELON_SLICE-0': 16
+'PUMPKIN_SEEDS-0': 36
+'MELON_SEEDS-0': 16
+'BEEF-0': 64
+'COOKED_BEEF-0': 64
+'CHICKEN-0': 64
+'COOKED_CHICKEN-0': 64
+'ROTTEN_FLESH-0': 24
+'ENDER_PEARL-0': 1024
+'BLAZE_ROD-0': 1536
+'GHAST_TEAR-0': 4096
+'GOLD_NUGGET-0': 227
+'NETHER_WART-0': 24
+'GLASS_BOTTLE-0': 1
+'SPIDER_EYE-0': 128
+'FERMENTED_SPIDER_EYE-0': 192
+'BLAZE_POWDER-0': 768
+'MAGMA_CREAM-0': 792
+'BREWING_STAND-0': 1539
+'CAULDRON-0': 1792
+'ENDER_EYE-0': 1792
+'GLISTERING_MELON_SLICE-0': 243
+'FIRE_CHARGE-0': 362
+'WRITABLE_BOOK-0': 152
+'WRITTEN_BOOK-0': 152
+'ITEM_FRAME-0': 96
+'FLOWER_POT-0': 192
+'MAP-0': 1344
+'PUMPKIN_PIE-0': 208
+'MUSIC_DISC_11-0': 2048
+'MUSIC_DISC_13-0': 2048
+'MUSIC_DISC_BLOCKS-0': 2048
+'MUSIC_DISC_CAT-0': 2048
+'MUSIC_DISC_CHIRP-0': 2048
+'MUSIC_DISC_FAR-0': 2048
+'MUSIC_DISC_MALL-0': 2048
+'MUSIC_DISC_MELLOHI-0': 2048
+'MUSIC_DISC_STAL-0': 2048
+'MUSIC_DISC_STRAD-0': 2048
+'MUSIC_DISC_WAIT-0': 2048
+'MUSIC_DISC_WARD-0': 2048

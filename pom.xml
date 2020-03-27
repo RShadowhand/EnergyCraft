@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.secretalgorithm.energycraft</groupId>
 	<artifactId>EnergyCraft</artifactId>
-	<version>1.4</version>
+	<version>1.5</version>
 	<repositories>
 	    <repository>
 	        <id>bukkit-repo</id>
@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.8-R0.1-SNAPSHOT</version>
+			<version>1.15.2-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
