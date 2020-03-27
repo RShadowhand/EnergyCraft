@@ -29,14 +29,14 @@ public class Config {
   @SuppressWarnings("deprecation")
   public float getEMC(ItemStack i) {
     if (i != null) {
-      String s = i.getType().getId() + "-" + i.getDurability();
+      String s = i.getType() + "-" + i.getDurability();
       String z = emcConfig.getString(s);
       float dur;
       if (z == null) {
-        s = i.getType().getId() + "-A";
+        s = i.getType() + "-A";
         z = emcConfig.getString(s);
         if (z == null) {
-          s = i.getType().getId() + "-X";
+          s = i.getType() + "-X";
           z = emcConfig.getString(s);
           if (z == null) {
             return 0;
@@ -153,12 +153,17 @@ public class Config {
     }
 
     InputStream defConfigStream = main.getResource("emcConfig.yml");
-    Reader r = new InputStreamReader(defConfigStream, StandardCharsets.UTF_8);
     if (defConfigStream != null) {
-      YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(r);
+      YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(emcConfigFile);
       emcConfig.options().copyDefaults(true);
       emcConfig.setDefaults(defConfig);
     }
+    // if (defConfigStream != null) {
+    // Reader r = new InputStreamReader(defConfigStream, StandardCharsets.UTF_8);
+    // YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(r);
+    // emcConfig.options().copyDefaults(true);
+    // emcConfig.setDefaults(defConfig);
+    // }
 
     String s = emcConfig.getString("Version");
     if (s != null) {

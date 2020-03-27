@@ -1,12 +1,12 @@
-# Built by EnergyCraft v1.4.0
-# 
+# Built by EnergyCraft v1.5.0
+#
 # For all help, see online documentation
 
 check-interval: 1
 max-stack-condense: 4
 permission-to-use: false
 broadcast-messages: true
-level1: 41-35%
-level2: 133-25%
-level3: 57-10%
-level4: 138-0%
+level1: GOLD_BLOCK-35%
+level2: EMERALD_BLOCK-25%
+level3: DIAMOND_BLOCK-10%
+level4: BEACON-0%

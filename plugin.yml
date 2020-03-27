@@ -1,16 +1,17 @@
 name: EnergyCraft_Reloaded
 main: com.secretalgorithm.energycraft.Main
 version: 1.4.0
+api-version: 1.13
 authors: [Shadowhand, vsams14, Samkio]
 commands:
    emc:
       description: Checks the EMC value of the item in hand.
       usage: /emc
-      
+
    ec:
       description: Main command control for the plugin.
       usage: See online documentation
-      
+
 permissions:
    ec.*:
       description: Gives access to all EnergyCraft nodes.
@@ -21,27 +22,27 @@ permissions:
          ec.reset: true
          ec.reload: true
       default: op
-      
+
    ec.build:
       description: Allows building/breaking a condenser.
       default: false
-      
+
    ec.edit:
       description: Allows editing of others' condensers.
       default: false
-      
+
    ec.reset:
       description: Left click reset available for these users. Give out at your own risk.
       default: false
-      
+
    ec.use.*:
       description: Allows access of the condenser chests.
       default: false
-      
+
    ec.reload:
       description: Allows a user to reload the EMC config
       default: false
-      
+
    ec.broadcast:
       descripiton: Get a message when a condenser is built/broken
       default: op
